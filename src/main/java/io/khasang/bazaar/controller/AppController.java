@@ -20,5 +20,9 @@ public class AppController {
         System.out.println("nweg1241u971");
         System.out.println("nweg1741u921");
         System.out.println("nweg1271u951");
+        System.out.println("jwen2092u758");
+        System.out.println("jwen2972u372");
+        System.out.println("jwen2782u358");
+        System.out.println("jwen2352u592");
     }
 }

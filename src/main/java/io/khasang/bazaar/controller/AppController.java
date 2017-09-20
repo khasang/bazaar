@@ -1,7 +1,6 @@
 package io.khasang.bazaar.controller;
 
-import io.khasang.bazaar.model.CreateTable;
-import io.khasang.bazaar.model.Message;
+import io.khasang.bazaar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,27 @@ public class AppController {
     @Autowired
     private CreateTable createTable;
 
+    @Autowired
+    private PopulateTable populateTable;
+
+    @Autowired
+    private SelectFromTable selectFromTable;
+
+    @Autowired
+    private UpdateTable updateTable;
+
+    @Autowired
+    private DeleteFromTable deleteFromTable;
+
+    @Autowired
+    private JoinTable joinTable;
+
+    @Autowired
+    private SubqueryTable subqueryTable;
+
+    @Autowired
+    private CaseWhenTable caseWhenTable;
+
     // http://localhost:8080/
     @RequestMapping("/")
     public String javaPageHello(Model model) {
@@ -29,7 +49,56 @@ public class AppController {
     @RequestMapping("/create")
     public String createTable(Model model) {
         model.addAttribute("status", createTable.createStatus());
-        // hello.jsp
+        // table.jsp
+        return "table";
+    }
+
+    @RequestMapping("/populate")
+    public String populateTable(Model model) {
+        model.addAttribute("status", populateTable.populateStatus());
+        // table.jsp
+        return "table";
+    }
+
+    @RequestMapping("/select")
+    public String selectFromTable(Model model) {
+        model.addAttribute("status", selectFromTable.selectStatus());
+        // table.jsp
+        return "table";
+    }
+
+    @RequestMapping("/update")
+    public String updateTable(Model model) {
+        model.addAttribute("status", updateTable.updateStatus());
+        // table.jsp
+        return "table";
+    }
+
+    @RequestMapping("/delete")
+    public String deleteFromTable(Model model) {
+        model.addAttribute("status", deleteFromTable.deleteStatus());
+        // table.jsp
+        return "table";
+    }
+
+    @RequestMapping("/join")
+    public String joinTable(Model model) {
+        model.addAttribute("status", joinTable.joinStatus());
+        // table.jsp
+        return "table";
+    }
+
+    @RequestMapping("/subquery")
+    public String subqueryTable(Model model) {
+        model.addAttribute("status", subqueryTable.subqueryStatus());
+        // table.jsp
+        return "table";
+    }
+
+    @RequestMapping("/casewhen")
+    public String caseWhenTable(Model model) {
+        model.addAttribute("status", caseWhenTable.caseWhenStatus());
+        // table.jsp
         return "table";
     }
 

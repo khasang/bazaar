@@ -1,6 +1,6 @@
 package io.khasang.bazaar.config.application;
 
-import io.khasang.bazaar.model.CreateTable;
+import io.khasang.bazaar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,5 +35,40 @@ public class AppConfig {
     @Bean
     public CreateTable createTable(){
         return new CreateTable(jdbcTemplate());
+    }
+
+    @Bean
+    public PopulateTable populateTable(){
+        return new PopulateTable(jdbcTemplate());
+    }
+
+    @Bean
+    public SelectFromTable selectFromTable(){
+        return new SelectFromTable(jdbcTemplate());
+    }
+
+    @Bean
+    public UpdateTable updateTable(){
+        return new UpdateTable(jdbcTemplate());
+    }
+
+    @Bean
+    public DeleteFromTable deleteFromTable(){
+        return new DeleteFromTable(jdbcTemplate());
+    }
+
+    @Bean
+    public JoinTable joinTable(){
+        return new JoinTable(jdbcTemplate());
+    }
+
+    @Bean
+    public SubqueryTable subqueryTable(){
+        return new SubqueryTable(jdbcTemplate());
+    }
+
+    @Bean
+    public CaseWhenTable caseWhenTable(){
+        return new CaseWhenTable(jdbcTemplate());
     }
 }

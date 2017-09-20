@@ -43,6 +43,14 @@ public class AppController {
         return "admin";
     }
 
+    @RequestMapping("/super_user")
+    public ModelAndView pageForSuper() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("superInfo", "This page for super users");
+        modelAndView.setViewName("super");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/password/{password}"}, method = RequestMethod.GET)
     public ModelAndView passwordEncode(@PathVariable("password") String password) {
         ModelAndView modelAndView = new ModelAndView();

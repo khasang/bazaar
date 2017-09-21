@@ -52,4 +52,10 @@ public class AppController {
         return "join";
     }
 
+    @RequestMapping("/admin")
+    public String getAdminInfo(Model model){
+        model.addAttribute("secure", "It's very secure page!");
+        return "admin";
+    }
+
 }

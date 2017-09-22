@@ -3,6 +3,31 @@ DROP TABLE Human ;
 DROP TABLE City ;
 DROP TABLE Specialty ;
 
+--Clean tables users & roles
+DROP TABLE users;
+DROP TABLE roles;
+
+--Create table for users & roles
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY NOT NULL ,
+  name VARCHAR(255),
+  login VARCHAR(255),
+  password VARCHAR(255),
+  role_id INTEGER
+);
+
+CREATE TABLE roles(
+  id INTEGER PRIMARY KEY NOT NULL ,
+  role_name VARCHAR(255)
+);
+
+INSERT INTO users VALUES (1,'admin','admin','$2a$04$md8jevFeaNNt9U02kjT3qeoud8J9KvXjHwlh5oJTKrdKyHTLx4C3q',1);
+INSERT INTO roles VALUES (1,'ROLE_ADMIN');
+INSERT INTO roles VALUES (2,'ROLE_USER');
+
+--SELECT login, password, TRUE FROM users WHERE login = 'admin';
+--SELECT u.login, r.role_name FROM users u JOIN roles r ON u.role_id = r.id where login = 'admin';
+--SELECT u.login, r.role_name FROM users u, roles r where u.role_id = r.id and login = 'admin';
 
 CREATE TABLE Human (
   key1 INT NOT NULL,

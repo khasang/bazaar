@@ -1,5 +1,8 @@
 package io.khasang.bazaar.config.application;
 
+import io.khasang.bazaar.dao.CatDao;
+import io.khasang.bazaar.dao.impl.CatDaoImpl;
+import io.khasang.bazaar.entity.Cat;
 import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,5 +50,10 @@ public class AppConfig {
     @Bean
     public CreateTable createTable(){
         return new CreateTable(jdbcTemplate());
+    }
+
+    @Bean
+    public CatDao catDao(){
+        return new CatDaoImpl(Cat.class);
     }
 }

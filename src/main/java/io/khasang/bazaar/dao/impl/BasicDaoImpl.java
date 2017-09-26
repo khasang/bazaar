@@ -33,6 +33,12 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     }
 
     @Override
+    public T updateCat(T entity) {
+        sessionFactory.getCurrentSession().update(entity);
+        return entity;
+    }
+
+    @Override
     public List<T> getList() {
         CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
@@ -40,6 +46,12 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
 
         criteriaQuery.select(root);
         return sessionFactory.getCurrentSession().createQuery(criteriaQuery).list();
+    }
+
+    @Override
+    public T delete(T entity) {
+        sessionFactory.getCurrentSession().delete(entity);
+        return entity;
     }
 
     @Override

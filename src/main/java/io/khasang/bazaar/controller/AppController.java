@@ -113,6 +113,13 @@ public class AppController {
         return "admin";
     }
 
+    @RequestMapping("/user")
+    public String getUserInfo(Model model) {
+        model.addAttribute("secure", "It's a very secure page!");
+        // user.jsp
+        return "user";
+    }
+
     @RequestMapping(value = {"/password/{password}"}, method = RequestMethod.GET)
     public ModelAndView passwordEncode(@PathVariable("password") String password) {
         ModelAndView modelAndView = new ModelAndView();

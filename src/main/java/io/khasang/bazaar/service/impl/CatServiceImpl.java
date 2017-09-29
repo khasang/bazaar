@@ -19,24 +19,24 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public List<Cat> getCatsByName(String name) {
+    public List<Cat> getByParam(String name) {
         return catDao.getCatsByName(name);
     }
 
     @Override
-    public Cat deleteCat(Long id) {
+    public Cat deleteById(Long id) {
         Cat cat = catDao.getById(id);
         return catDao.delete(cat);
     }
 
     @Override
-    public Cat addCat(Cat cat) {
-        return catDao.addCat(cat);
+    public Cat add(Cat cat) {
+        return catDao.add(cat);
     }
 
     @Override
-    public Cat updateCat(Cat cat) {
-        return catDao.updateCat(cat);
+    public Cat update(Cat cat) {
+        return catDao.update(cat);
     }
 
     @Override

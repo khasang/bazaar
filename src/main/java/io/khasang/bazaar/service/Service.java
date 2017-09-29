@@ -1,21 +1,10 @@
-package io.khasang.bazaar.dao;
-
-
-import org.hibernate.Session;
+package io.khasang.bazaar.service;
 
 import java.util.List;
 
-public interface BasicDao<T> {
-
+public interface Service<T> {
     /**
-     * get current session
-     *
-     * @return session
-     */
-    Session getCurrentSession();
-
-    /**
-     * Receive entity by id
+     * Receive Entity by id
      *
      * @param id - entities id what we want to receive
      * @return entity
@@ -31,9 +20,9 @@ public interface BasicDao<T> {
     T add(T entity);
 
     /**
-     * Create entity at database
+     * Update entity at database
      *
-     * @param entity - entity for creation
+     * @param entity - entity for update
      * @return entity
      */
     T update(T entity);
@@ -46,10 +35,18 @@ public interface BasicDao<T> {
     List<T> getList();
 
     /**
-     * Delete entity from database
+     * Receive cats from database with specified name
      *
-     * @param entity - entity for deletion
+     * @param param - entities name
+     * @return list of entities with specified param
+     */
+    List<T> getByParam(String param);
+
+    /**
+     * Delete entity from database by id
+     *
+     * @param id - entities id for delete
      * @return entity
      */
-    T delete(T entity);
+    T deleteById(Long id);
 }

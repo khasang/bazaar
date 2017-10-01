@@ -19,6 +19,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource(value = "classpath:hibernate.properties")
 public class HibernateConfig {
+
     private final Environment environment;
 
     @Autowired
@@ -27,17 +28,7 @@ public class HibernateConfig {
     }
 
     @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getRequiredProperty("hibernate.driver"));
-        dataSource.setUrl(environment.getRequiredProperty("hibernate.url"));
-        dataSource.setUsername(environment.getRequiredProperty("hibernate.name"));
-        dataSource.setPassword(environment.getRequiredProperty("hibernate.password"));
-        return dataSource;
-    }
-
-    @Bean
-    public LocalSessionFactoryBean sessionFactory(){
+    public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("io.khasang.bazaar.entity");
@@ -45,22 +36,32 @@ public class HibernateConfig {
         return sessionFactory;
     }
 
-    private Properties hibernateProperties(){
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(environment.getProperty("hibernate.driver"));
+        dataSource.setUrl(environment.getProperty("hibernate.url"));
+        dataSource.setUsername(environment.getProperty("hibernate.name"));
+        dataSource.setPassword(environment.getProperty("hibernate.password"));
+        return dataSource;
+    }
+
+    private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-        properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-        properties.put("show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+        properties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+        properties.setProperty("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
+        properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
+        properties.setProperty("show_sql", environment.getProperty("hibernate.show_sql"));
         return properties;
     }
 
     @Bean
     @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
-        HibernateTransactionManager tsManager = new HibernateTransactionManager();
-        tsManager.setSessionFactory(sessionFactory);
-        return tsManager;
+    HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+        HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
+        hibernateTransactionManager.setSessionFactory(sessionFactory);
+        return hibernateTransactionManager;
     }
 
     @Bean

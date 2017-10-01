@@ -5,16 +5,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cats")
 public class Cat {
+
+    public Cat() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cat_name")
+    @Column (name = "cat_name")
     private String name;
     private String description;
 
-    public Cat() {
-    }
+    @Transient
+    private int age;
 
     @Override
     public boolean equals(Object o) {

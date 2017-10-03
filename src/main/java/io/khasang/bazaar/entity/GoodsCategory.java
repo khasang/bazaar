@@ -2,19 +2,21 @@ package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
 
+/**
+ * Created by Zulfia Garifullina on 26.09.2017.
+ */
 @Entity
-@Table(name = "cats")
-public class Cat {
+@Table(name = "goods_categories")
+public class GoodsCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cat_name")
+    @Column(name = "category_name")
     private String name;
-//    @Transient
     private String description;
 
-    public Cat() {
+    public GoodsCategory() {
     }
 
     @Override
@@ -22,11 +24,11 @@ public class Cat {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Cat cat = (Cat) o;
+        GoodsCategory that = (GoodsCategory) o;
 
-        if (id != null ? !id.equals(cat.id) : cat.id != null) return false;
-        if (name != null ? !name.equals(cat.name) : cat.name != null) return false;
-        return description != null ? description.equals(cat.description) : cat.description == null;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
     }
 
     @Override

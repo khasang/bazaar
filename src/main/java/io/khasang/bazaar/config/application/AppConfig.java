@@ -1,10 +1,13 @@
 package io.khasang.bazaar.config.application;
 
 import io.khasang.bazaar.dao.CatDao;
+import io.khasang.bazaar.dao.DeliveryDao;
 import io.khasang.bazaar.dao.ProductDao;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
+import io.khasang.bazaar.dao.impl.DeliveryDaoImpl;
 import io.khasang.bazaar.dao.impl.ProductDaoImpl;
 import io.khasang.bazaar.entity.Cat;
+import io.khasang.bazaar.entity.Delivery;
 import io.khasang.bazaar.entity.Product;
 import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +66,10 @@ public class AppConfig {
     @Bean
     public ProductDao productDao(){
         return new ProductDaoImpl(Product.class);
+    }
+
+    @Bean
+    public DeliveryDao deliveryDao(){
+        return new DeliveryDaoImpl(Delivery.class);
     }
 }

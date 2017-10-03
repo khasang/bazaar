@@ -26,6 +26,12 @@ public class ProductController {
         return productService.getById(Long.parseLong(id));
     }
 
+    @RequestMapping(value = "/add", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    Product addProduct(@RequestBody Product product){
+        return productService.add(product);
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public Product updateProduct(@RequestBody Product product) {

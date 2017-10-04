@@ -5,6 +5,7 @@ import io.khasang.bazaar.entity.GoodsCategory;
 import java.util.List;
 
 /**
+ * Service interface for Goods Category entity.
  * @author Zulfia Garifullina
  * @date 26.09.2017.
  */
@@ -17,6 +18,13 @@ public interface GoodsCategoryService {
     GoodsCategory getById(Long id);
 
     /**
+     * Method for retrieving goods categories from the database by their name.
+     * @param name - name of the category
+     * @return all the goods categories with the given name
+     */
+    List<GoodsCategory> getGoodsCategoriesByName(String name);
+
+    /**
      * Method for adding a new goods category to the database table
      * @param goodsCategory - the object being added to the database table as a row
      * @return the object that was added
@@ -24,7 +32,7 @@ public interface GoodsCategoryService {
     GoodsCategory addGoodsCategory(GoodsCategory goodsCategory);
 
     /**
-     * Method for updating a goods category
+     * Method for updating a goods category in the database
      * @param goodsCategory - the object being updated in the database
      * @return the goods category that was updated
      */
@@ -42,11 +50,4 @@ public interface GoodsCategoryService {
      * @return a List of goods categories objects from the database table.
      */
     List<GoodsCategory> getList();
-
-    /**
-     * Method for retrieving goods categories from the database by their name.
-     * @param name - name of the category
-     * @return all the goods categories with the given name
-     */
-    List<GoodsCategory> getGoodsCategoriesByName(String name);
 }

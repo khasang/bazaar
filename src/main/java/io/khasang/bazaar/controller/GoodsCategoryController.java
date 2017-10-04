@@ -29,6 +29,12 @@ public class GoodsCategoryController {
         return goodsCategoryService.getById(Long.parseLong(id));
     }
 
+    @RequestMapping(value = "/get/name/{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<GoodsCategory> getGoodsCategoriesByName(@PathVariable(value = "name") String name) {
+        return goodsCategoryService.getGoodsCategoriesByName(name);
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
     public GoodsCategory addGoodsCategory(@RequestBody GoodsCategory goodsCategory) {
@@ -51,11 +57,5 @@ public class GoodsCategoryController {
     @ResponseBody
     public List<GoodsCategory> getGoodsCategories() {
         return goodsCategoryService.getList();
-    }
-
-    @RequestMapping(value = "/get/name/{name}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<GoodsCategory> getGoodsCategoriesByName(@PathVariable(value = "name") String name) {
-        return goodsCategoryService.getGoodsCategoriesByName(name);
     }
 }

@@ -1,6 +1,5 @@
 package io.khasang.bazaar.dao;
 
-import io.khasang.bazaar.entity.Cat;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public interface BasicDao<T> {
      * @param entity - entity for creation
      * @return entity
      */
-    T addCat(T entity);
+    T add(T entity);
 
     /**
      * Create entity at database
@@ -36,7 +35,7 @@ public interface BasicDao<T> {
      * @param entity - entity for creation
      * @return entity
      */
-    T updateCat(T entity);
+    T update(T entity);
 
     /**
      * Receive all entities from database

@@ -1,9 +1,15 @@
 package io.khasang.bazaar.config.application;
 
 import io.khasang.bazaar.dao.CatDao;
+import io.khasang.bazaar.dao.GoodsCategoryDao;
+import io.khasang.bazaar.dao.GoodsDao;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
+import io.khasang.bazaar.dao.impl.GoodsCategoryDaoImpl;
+import io.khasang.bazaar.dao.impl.GoodsDaoImpl;
 import io.khasang.bazaar.entity.Cat;
-import io.khasang.bazaar.model.CreateTable;
+import io.khasang.bazaar.entity.Goods;
+import io.khasang.bazaar.entity.GoodsCategory;
+import io.khasang.bazaar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +28,7 @@ public class AppConfig {
     private Environment environment;
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcDao = new JdbcDaoImpl();
         jdbcDao.setDataSource(dataSource());
         jdbcDao.setUsersByUsernameQuery(environment.getRequiredProperty("usersByQuery"));
@@ -55,5 +61,15 @@ public class AppConfig {
     @Bean
     public CatDao catDao(){
         return new CatDaoImpl(Cat.class);
+    }
+
+    @Bean
+    public GoodsCategoryDao goodsCategoryDao() {
+        return new GoodsCategoryDaoImpl(GoodsCategory.class);
+    }
+
+    @Bean
+    public GoodsDao goodsDao() {
+        return new GoodsDaoImpl(Goods.class);
     }
 }

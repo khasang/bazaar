@@ -33,7 +33,7 @@ public class AppController {
     @RequestMapping("/create")
     public String createTable(Model model) {
         model.addAttribute("status", createTable.createStatus());
-        // hello.jsp
+        // table.jsp
         return "table";
     }
 

@@ -27,25 +27,20 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     }
 
     @Override
-    public T addCat(T entity) {
+    public T getById(Long id) {
+        return getCurrentSession().get(entityClass, id);
+    }
+
+    @Override
+    public T add(T entity) {
         sessionFactory.getCurrentSession().save(entity);
         return entity;
     }
 
     @Override
-    public T updateCat(T entity) {
+    public T update(T entity) {
         sessionFactory.getCurrentSession().update(entity);
         return entity;
-    }
-
-    @Override
-    public List<T> getList() {
-        CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
-        Root<T> root = criteriaQuery.from(entityClass);
-
-        criteriaQuery.select(root);
-        return sessionFactory.getCurrentSession().createQuery(criteriaQuery).list();
     }
 
     @Override
@@ -55,7 +50,11 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     }
 
     @Override
-    public T getById(Long id) {
-        return getCurrentSession().get(entityClass, id);
+    public List<T> getList() {
+        CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root);
+        return sessionFactory.getCurrentSession().createQuery(criteriaQuery).list();
     }
 }

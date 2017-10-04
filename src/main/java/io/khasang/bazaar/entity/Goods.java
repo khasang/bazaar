@@ -17,16 +17,14 @@ public class Goods {
     @Column(name = "goods_id")
     private Long id;
 
-    @Column(name = "goods_name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id") //, nullable = false)
+    @JoinColumn(name = "category_id")
     private GoodsCategory category;
 
-    @Column(name = "goods_description")
     private String description;
-
     private Integer price;
 
     @Column(name = "quantity_in_stock")

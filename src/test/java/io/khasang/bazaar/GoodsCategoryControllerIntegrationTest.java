@@ -48,9 +48,35 @@ public class GoodsCategoryControllerIntegrationTest {
 
     @Test
     public void updateGoodsCategory() {
-        GoodsCategory goodsCategory = changeGoodsCategory();
+        GoodsCategory goodsCategory = createGoodsCategory();
+        GoodsCategory changedGoodsCategory = changeGoodsCategory(goodsCategory);
 
         RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<GoodsCategory> responseEntity = restTemplate.exchange(
+                ROOT + GET_BY_ID + "/{id}",
+                HttpMethod.GET,
+                null,
+                GoodsCategory.class,
+                changedGoodsCategory.getId()
+        );
+
+        GoodsCategory receivedGoodsCategory = responseEntity.getBody();
+        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertNotNull(receivedGoodsCategory);
+        assertEquals(changedGoodsCategory.getName(), receivedGoodsCategory.getName());
+        assertEquals(changedGoodsCategory.getDescription(), receivedGoodsCategory.getDescription());
+    }
+
+    @Test
+    public void deleteGoodsCategory() {
+        GoodsCategory goodsCategory = createGoodsCategory();
+        RestTemplate restTemplate = new RestTemplate();
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + DELETE)
+                .queryParam("id", goodsCategory.getId());
+
+        restTemplate.delete(builder.build().encode().toUri());
+
         ResponseEntity<GoodsCategory> responseEntity = restTemplate.exchange(
                 ROOT + GET_BY_ID + "/{id}",
                 HttpMethod.GET,
@@ -60,31 +86,7 @@ public class GoodsCategoryControllerIntegrationTest {
         );
 
         GoodsCategory receivedGoodsCategory = responseEntity.getBody();
-        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
-        assertNotNull(receivedGoodsCategory);
-        assertEquals(goodsCategory.getName(), receivedGoodsCategory.getName());
-        assertEquals(goodsCategory.getDescription(), receivedGoodsCategory.getDescription());
-    }
-
-    @Test
-    public void deleteGoodsCategory() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + DELETE)
-                .queryParam("id", "9");
-
-        restTemplate.delete(builder.build().encode().toUri());
-
-        ResponseEntity<GoodsCategory> responseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
-                HttpMethod.GET,
-                null,
-                GoodsCategory.class,
-                9
-        );
-
-        GoodsCategory receivedGoodsCategory = responseEntity.getBody();
-//        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNull(receivedGoodsCategory);
     }
 
@@ -150,25 +152,16 @@ public class GoodsCategoryControllerIntegrationTest {
         return goodsCategory;
     }
 
-    private GoodsCategory changeGoodsCategory() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<GoodsCategory> responseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
-                HttpMethod.GET,
-                null,
-                GoodsCategory.class,
-                6
-        );
-
-        GoodsCategory changingGoodsCategory = responseEntity.getBody();
-        changingGoodsCategory.setName("Fashion");
-        changingGoodsCategory.setDescription("Womenswear and menswear");
+    private GoodsCategory changeGoodsCategory(GoodsCategory goodsCategory) {
+        goodsCategory.setName("Fashion");
+        goodsCategory.setDescription("Womenswear and menswear");
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        HttpEntity<GoodsCategory> httpEntity = new HttpEntity<>(changingGoodsCategory, httpHeaders);
+        HttpEntity<GoodsCategory> httpEntity = new HttpEntity<>(goodsCategory, httpHeaders);
 
+        RestTemplate restTemplate = new RestTemplate();
         GoodsCategory changedGoodsCategory = restTemplate.exchange(
                 ROOT + UPDATE,
                 HttpMethod.POST,

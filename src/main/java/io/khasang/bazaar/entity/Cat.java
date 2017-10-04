@@ -1,6 +1,8 @@
 package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cats")
@@ -13,8 +15,18 @@ public class Cat {
     private String name;
 //    @Transient
     private String description;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CatWoman> catWomanList = new ArrayList<>();
 
     public Cat() {
+    }
+
+    public List<CatWoman> getCatWomanList() {
+        return catWomanList;
+    }
+
+    public void setCatWomanList(List<CatWoman> catWomanList) {
+        this.catWomanList = catWomanList;
     }
 
     @Override

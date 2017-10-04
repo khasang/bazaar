@@ -24,10 +24,8 @@ public class AppController {
 
     // http://localhost:8080/
     @RequestMapping("/")
-    public String javaPageHello(Model model) {
-        model.addAttribute("name", message.getName());
-        // hello.jsp
-        return "hello";
+    public String javaPageHello() {
+        return "menu";
     }
 
     @RequestMapping("/create")

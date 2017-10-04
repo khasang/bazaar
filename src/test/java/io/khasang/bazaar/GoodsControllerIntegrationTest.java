@@ -29,13 +29,6 @@ public class GoodsControllerIntegrationTest {
     private final String RESERVE = "/reserve";
     private final String UNRESERVE = "/unreserve";
     private final String BUY = "/buy";
-    private GoodsCategory category = (new RestTemplate()).exchange(
-            ROOT + GET_BY_ID + "/{id}",
-            HttpMethod.GET,
-            null,
-            GoodsCategory.class,
-            5
-    ).getBody();
 
     @Test
     public void addGoods() {
@@ -59,9 +52,40 @@ public class GoodsControllerIntegrationTest {
 
     @Test
     public void updateGoods() {
-        Goods goods = changeGoods();
+        Goods goods = createGoods();
+        Goods changedGoods = changeGoods(goods);
 
         RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Goods> responseEntity = restTemplate.exchange(
+                ROOT + GET_BY_ID + "/{id}",
+                HttpMethod.GET,
+                null,
+                Goods.class,
+                changedGoods.getId()
+        );
+
+        Goods receivedGoods = responseEntity.getBody();
+        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertNotNull(receivedGoods);
+        assertNotNull(receivedGoods.getCategory());
+        assertEquals(changedGoods.getName(), receivedGoods.getName());
+        assertEquals(changedGoods.getDescription(), receivedGoods.getDescription());
+        assertEquals(changedGoods.getCategory(), receivedGoods.getCategory());
+        assertEquals(changedGoods.getPrice(), receivedGoods.getPrice());
+        assertEquals(changedGoods.getQuantityInStock(), receivedGoods.getQuantityInStock());
+        assertEquals(changedGoods.getQuantityReserved(), receivedGoods.getQuantityReserved());
+    }
+
+    @Test
+    public void deleteGoods() {
+        Goods goods = createGoods();
+        RestTemplate restTemplate = new RestTemplate();
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + DELETE)
+                .queryParam("id", goods.getId());
+
+        restTemplate.delete(builder.build().encode().toUri());
+
         ResponseEntity<Goods> responseEntity = restTemplate.exchange(
                 ROOT + GET_BY_ID + "/{id}",
                 HttpMethod.GET,
@@ -71,41 +95,14 @@ public class GoodsControllerIntegrationTest {
         );
 
         Goods receivedGoods = responseEntity.getBody();
-        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
-        assertNotNull(receivedGoods);
-        assertNotNull(receivedGoods.getCategory());
-        assertEquals(goods.getName(), receivedGoods.getName());
-        assertEquals(goods.getDescription(), receivedGoods.getDescription());
-        assertEquals(goods.getCategory(), receivedGoods.getCategory());
-        assertEquals(goods.getPrice(), receivedGoods.getPrice());
-        assertEquals(goods.getQuantityInStock(), receivedGoods.getQuantityInStock());
-        assertEquals(goods.getQuantityReserved(), receivedGoods.getQuantityReserved());
-    }
-
-    @Test
-    public void deleteGoods() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + DELETE)
-                .queryParam("id", "6");
-
-        restTemplate.delete(builder.build().encode().toUri());
-
-        ResponseEntity<Goods> responseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
-                HttpMethod.GET,
-                null,
-                Goods.class,
-                6
-        );
-
-        Goods receivedGoods = responseEntity.getBody();
-//        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNull(receivedGoods);
     }
 
     @Test
     public void getGoodsByName() {
+        Goods goods = createGoods();
+
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Goods>> result = restTemplate.exchange(
                 ROOT + GET_BY_NAME + "/{name}",
@@ -113,7 +110,7 @@ public class GoodsControllerIntegrationTest {
                 null,
                 new ParameterizedTypeReference<List<Goods>>() {
                 },
-                "Harry Potter"
+                goods.getName()
         );
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -140,7 +137,8 @@ public class GoodsControllerIntegrationTest {
 
     @Test
     public void reserveGoods() {
-        Goods goods = reserve();
+        Goods goods = createGoods();
+        Goods reservedGoods = reserve(goods);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Goods> responseEntity = restTemplate.exchange(
@@ -148,28 +146,70 @@ public class GoodsControllerIntegrationTest {
                 HttpMethod.GET,
                 null,
                 Goods.class,
-                goods.getId()
+                reservedGoods.getId()
         );
 
         Goods receivedGoods = responseEntity.getBody();
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(receivedGoods);
-        assertEquals(goods.getName(), receivedGoods.getName());
-        assertEquals(goods.getDescription(), receivedGoods.getDescription());
-        assertEquals(goods.getCategory(), receivedGoods.getCategory());
-        assertEquals(goods.getPrice(), receivedGoods.getPrice());
-        assertEquals(goods.getQuantityInStock(), receivedGoods.getQuantityInStock());
-        assertEquals(goods.getQuantityReserved(), receivedGoods.getQuantityReserved());
+        assertEquals(reservedGoods.getName(), receivedGoods.getName());
+        assertEquals(reservedGoods.getDescription(), receivedGoods.getDescription());
+        assertEquals(reservedGoods.getCategory(), receivedGoods.getCategory());
+        assertEquals(reservedGoods.getPrice(), receivedGoods.getPrice());
+        assertEquals(reservedGoods.getQuantityInStock(), receivedGoods.getQuantityInStock());
+        assertEquals(reservedGoods.getQuantityReserved(), receivedGoods.getQuantityReserved());
     }
 
     @Test
     public void unreserveGoods() {
+        Goods goods = createGoods();
+        Goods reservedGoods = reserve(goods);
+        Goods unreservedGoods = unreserve(reservedGoods);
 
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Goods> responseEntity = restTemplate.exchange(
+                ROOT + GET_BY_ID + "/{id}",
+                HttpMethod.GET,
+                null,
+                Goods.class,
+                unreservedGoods.getId()
+        );
+
+        Goods receivedGoods = responseEntity.getBody();
+        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertNotNull(receivedGoods);
+        assertEquals(unreservedGoods.getName(), receivedGoods.getName());
+        assertEquals(unreservedGoods.getDescription(), receivedGoods.getDescription());
+        assertEquals(unreservedGoods.getCategory(), receivedGoods.getCategory());
+        assertEquals(unreservedGoods.getPrice(), receivedGoods.getPrice());
+        assertEquals(unreservedGoods.getQuantityInStock(), receivedGoods.getQuantityInStock());
+        assertEquals(unreservedGoods.getQuantityReserved(), receivedGoods.getQuantityReserved());
     }
 
     @Test
     public void buyGoods() {
+        Goods goods = createGoods();
+        Goods reservedGoods = reserve(goods);
+        Goods boughtGoods = buy(reservedGoods);
 
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Goods> responseEntity = restTemplate.exchange(
+                ROOT + GET_BY_ID + "/{id}",
+                HttpMethod.GET,
+                null,
+                Goods.class,
+                boughtGoods.getId()
+        );
+
+        Goods receivedGoods = responseEntity.getBody();
+        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertNotNull(receivedGoods);
+        assertEquals(boughtGoods.getName(), receivedGoods.getName());
+        assertEquals(boughtGoods.getDescription(), receivedGoods.getDescription());
+        assertEquals(boughtGoods.getCategory(), receivedGoods.getCategory());
+        assertEquals(boughtGoods.getPrice(), receivedGoods.getPrice());
+        assertEquals(boughtGoods.getQuantityInStock(), receivedGoods.getQuantityInStock());
+        assertEquals(boughtGoods.getQuantityReserved(), receivedGoods.getQuantityReserved());
     }
 
     private Goods createGoods() {
@@ -186,12 +226,13 @@ public class GoodsControllerIntegrationTest {
                 httpEntity,
                 Goods.class).getBody();
         assertNotNull(createdGoods);
-        assertEquals("iPhone X", createdGoods.getName());
-        assertEquals("Latest iPhone model", createdGoods.getDescription());
-        assertEquals(category, createdGoods.getCategory());
-        assertEquals(new Integer(100000), createdGoods.getPrice());
-        assertEquals(new Integer(20), createdGoods.getQuantityInStock());
-        assertEquals(new Integer(0), createdGoods.getQuantityReserved());
+        assertEquals("Skis", createdGoods.getName());
+        assertEquals("Mountain skis", createdGoods.getDescription());
+        assertEquals("Sports goods", createdGoods.getCategory().getName());
+        assertEquals("All you need to keep active", createdGoods.getCategory().getDescription());
+        assertEquals(new Integer(5000), createdGoods.getPrice());
+        assertEquals(new Integer(600), createdGoods.getQuantityInStock());
+        assertEquals(new Integer(200), createdGoods.getQuantityReserved());
         assertNotNull(createdGoods.getId());
 
         return createdGoods;
@@ -199,46 +240,40 @@ public class GoodsControllerIntegrationTest {
 
     private Goods prefillGoods() {
         Goods goods = new Goods();
-        goods.setName("iPhone X");
-        goods.setDescription("Latest iPhone model");
+        goods.setName("Skis");
+        goods.setDescription("Mountain skis");
+        GoodsCategory category = new GoodsCategory();
+        category.setName("Sports goods");
+        category.setDescription("All you need to keep active");
         goods.setCategory(category);
-        goods.setPrice(100000);
-        goods.setQuantityInStock(20);
-        goods.setQuantityReserved(0);
+        goods.setPrice(5000);
+        goods.setQuantityInStock(600);
+        goods.setQuantityReserved(200);
         return goods;
     }
 
-    private Goods changeGoods() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Goods> responseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
-                HttpMethod.GET,
-                null,
-                Goods.class,
-                6
-        );
-
-        Goods changingGoods = responseEntity.getBody();
-        changingGoods.setName("Samsung Galaxy S8");
-        changingGoods.setDescription("Closest rival of iPhone line");
-        changingGoods.setPrice(80000);
-        changingGoods.setQuantityInStock(400);
-        changingGoods.setQuantityReserved(150);
+    private Goods changeGoods(Goods goods) {
+        goods.setName("Snowboard");
+        goods.setDescription("All-mountain snowboard");
+        goods.setPrice(8000);
+        goods.setQuantityInStock(400);
+        goods.setQuantityReserved(150);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        HttpEntity<Goods> httpEntity = new HttpEntity<>(changingGoods, httpHeaders);
+        HttpEntity<Goods> httpEntity = new HttpEntity<>(goods, httpHeaders);
 
+        RestTemplate restTemplate = new RestTemplate();
         Goods changedGoods = restTemplate.exchange(
                 ROOT + UPDATE,
                 HttpMethod.POST,
                 httpEntity,
                 Goods.class).getBody();
         assertNotNull(changedGoods);
-        assertEquals("Samsung Galaxy S8", changedGoods.getName());
-        assertEquals("Closest rival of iPhone line", changedGoods.getDescription());
-        assertEquals(new Integer(80000), changedGoods.getPrice());
+        assertEquals("Snowboard", changedGoods.getName());
+        assertEquals("All-mountain snowboard", changedGoods.getDescription());
+        assertEquals(new Integer(8000), changedGoods.getPrice());
         assertEquals(new Integer(400), changedGoods.getQuantityInStock());
         assertEquals(new Integer(150), changedGoods.getQuantityReserved());
         assertNotNull(changedGoods.getId());
@@ -246,41 +281,93 @@ public class GoodsControllerIntegrationTest {
         return changedGoods;
     }
 
-    private Goods reserve() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Goods> responseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
-                HttpMethod.GET,
-                null,
-                Goods.class,
-                6
-        );
-
-        Goods changingGoods = responseEntity.getBody();
-        changingGoods.setName("Samsung Galaxy S8");
-        changingGoods.setDescription("Closest rival of iPhone line");
-        changingGoods.setPrice(80000);
-        changingGoods.setQuantityInStock(400);
-        changingGoods.setQuantityReserved(150);
+    private Goods reserve(Goods goods) {
+        goods.setQuantityInStock(goods.getQuantityInStock() - 10);
+        goods.setQuantityReserved(goods.getQuantityReserved() + 10);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        HttpEntity<Goods> httpEntity = new HttpEntity<>(changingGoods, httpHeaders);
+        HttpEntity<Goods> httpEntity = new HttpEntity<>(goods, httpHeaders);
 
-        Goods changedGoods = restTemplate.exchange(
-                ROOT + UPDATE,
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + RESERVE)
+                .queryParam("id", goods.getId())
+                .queryParam("quantity", 10);
+
+        RestTemplate restTemplate = new RestTemplate();
+        Goods reservedGoods = restTemplate.exchange(
+                builder.build().encode().toUri(),
                 HttpMethod.POST,
                 httpEntity,
                 Goods.class).getBody();
-        assertNotNull(changedGoods);
-        assertEquals("Samsung Galaxy S8", changedGoods.getName());
-        assertEquals("Closest rival of iPhone line", changedGoods.getDescription());
-        assertEquals(new Integer(80000), changedGoods.getPrice());
-        assertEquals(new Integer(400), changedGoods.getQuantityInStock());
-        assertEquals(new Integer(150), changedGoods.getQuantityReserved());
-        assertNotNull(changedGoods.getId());
+        assertNotNull(reservedGoods);
+        assertEquals("Skis", reservedGoods.getName());
+        assertEquals("Mountain skis", reservedGoods.getDescription());
+        assertEquals(new Integer(5000), reservedGoods.getPrice());
+        assertEquals(new Integer(590), reservedGoods.getQuantityInStock());
+        assertEquals(new Integer(210), reservedGoods.getQuantityReserved());
+        assertNotNull(reservedGoods.getId());
 
         return reservedGoods;
+    }
+
+    private Goods unreserve(Goods reservedGoods) {
+        reservedGoods.setQuantityInStock(reservedGoods.getQuantityInStock() + 10);
+        reservedGoods.setQuantityReserved(reservedGoods.getQuantityReserved() - 10);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<Goods> httpEntity = new HttpEntity<>(reservedGoods, httpHeaders);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + UNRESERVE)
+                .queryParam("id", reservedGoods.getId())
+                .queryParam("quantity", 10);
+
+        RestTemplate restTemplate = new RestTemplate();
+        Goods unreservedGoods = restTemplate.exchange(
+                builder.build().encode().toUri(),
+                HttpMethod.POST,
+                httpEntity,
+                Goods.class).getBody();
+        assertNotNull(unreservedGoods);
+        assertEquals("Skis", unreservedGoods.getName());
+        assertEquals("Mountain skis", unreservedGoods.getDescription());
+        assertEquals(new Integer(5000), unreservedGoods.getPrice());
+        assertEquals(new Integer(600), unreservedGoods.getQuantityInStock());
+        assertEquals(new Integer(200), unreservedGoods.getQuantityReserved());
+        assertNotNull(unreservedGoods.getId());
+
+        return unreservedGoods;
+    }
+
+    private Goods buy(Goods reservedGoods) {
+        reservedGoods.setQuantityInStock(reservedGoods.getQuantityReserved() - 10);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<Goods> httpEntity = new HttpEntity<>(reservedGoods, httpHeaders);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + BUY)
+                .queryParam("id", reservedGoods.getId())
+                .queryParam("quantity", 10);
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        Goods boughtGoods = restTemplate.exchange(
+                builder.build().encode().toUri(),
+                HttpMethod.POST,
+                httpEntity,
+                Goods.class).getBody();
+        assertNotNull(boughtGoods);
+        assertEquals("Skis", boughtGoods.getName());
+        assertEquals("Mountain skis", boughtGoods.getDescription());
+        assertEquals(new Integer(5000), boughtGoods.getPrice());
+        assertEquals(new Integer(590), boughtGoods.getQuantityInStock());
+        assertEquals(new Integer(200), boughtGoods.getQuantityReserved());
+        assertNotNull(boughtGoods.getId());
+
+        return boughtGoods;
     }
 }

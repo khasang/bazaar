@@ -14,10 +14,9 @@ public class GoodsCategory {
     @Column(name = "category_id")
     private Long id;
 
-    @Column(name = "category_name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "category_description")
     private String description;
 
     public GoodsCategory() {

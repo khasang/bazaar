@@ -5,6 +5,7 @@ import io.khasang.bazaar.entity.GoodsCategory;
 import java.util.List;
 
 /**
+ * Interface for representing DAO for GoodsCategory entity.
  * @author Zulfia Garifullina
  * @date 26.09.2017.
  */

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * Implementation of the service interface for Goods Category entity.
  * @author Zulfia Garifullina
  * @date 26.09.2017.
  */
@@ -20,6 +21,11 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public GoodsCategory getById(Long id) {
         return goodsCategoryDao.getById(id);
+    }
+
+    @Override
+    public List<GoodsCategory> getGoodsCategoriesByName(String name) {
+        return goodsCategoryDao.getGoodsCategoriesByName(name);
     }
 
     @Override
@@ -41,10 +47,5 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public List<GoodsCategory> getList() {
         return goodsCategoryDao.getList();
-    }
-
-    @Override
-    public List<GoodsCategory> getGoodsCategoriesByName(String name) {
-        return goodsCategoryDao.getGoodsCategoriesByName(name);
     }
 }

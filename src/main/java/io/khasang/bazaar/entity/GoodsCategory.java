@@ -2,18 +2,22 @@ package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
 
-/**
- * Created by Zulfia Garifullina on 26.09.2017.
+/** This class describes a database entity that represents categories of goods
+ * @author Zulfia Garifullina
+ * @date 26.09.2017.
  */
 @Entity
 @Table(name = "goods_categories")
 public class GoodsCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
     private Long id;
 
-    @Column(name = "category_name")
+    @Column(name = "category_name", nullable = false)
     private String name;
+
+    @Column(name = "category_description")
     private String description;
 
     public GoodsCategory() {

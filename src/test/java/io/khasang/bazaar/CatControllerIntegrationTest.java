@@ -1,11 +1,13 @@
 package io.khasang.bazaar;
 
 import io.khasang.bazaar.entity.Cat;
+import io.khasang.bazaar.entity.CatWoman;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -32,6 +34,8 @@ public class CatControllerIntegrationTest {
         Cat receivedCat = responseEntity.getBody();
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(receivedCat);
+        assertNotNull(receivedCat.getCatWomanList());
+        assertEquals("Murka", receivedCat.getCatWomanList().get(1).getName());
         assertEquals(cat.getName(), receivedCat.getName());
 
     }
@@ -79,6 +83,18 @@ public class CatControllerIntegrationTest {
         Cat cat = new Cat();
         cat.setName("Barsik");
         cat.setDescription("sleepy");
+
+        CatWoman catWoman1 = new CatWoman();
+        catWoman1.setName("Riska");
+
+        CatWoman catWoman2 = new CatWoman();
+        catWoman2.setName("Murka");
+
+        List<CatWoman> list = new ArrayList<>();
+        list.add(catWoman1);
+        list.add(catWoman2);
+        cat.setCatWomanList(list);
+
         return cat;
     }
 }

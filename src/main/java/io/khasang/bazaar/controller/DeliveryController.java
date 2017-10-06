@@ -51,7 +51,7 @@ public class DeliveryController {
 
     @RequestMapping(value = "/get/recipient/{recipient}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Delivery> getDeliveriesByName(@PathVariable(value = "recipient") String recipient){
+    public List<Delivery> getDeliveriesByRecipient(@PathVariable(value = "recipient") String recipient){
         return deliveryService.getByParam(recipient);
     }
 }

@@ -1,12 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Cat's view</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js" type="text/javascript"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css"/>
+
 </head>
 
 <script type="text/javascript">
+
     var service = '/cat';
     var RestPut = function (name, description) {
         var JSONObject = {
@@ -74,9 +80,36 @@
             }
         });
     }
+
+    $(document).ready(function () {
+        $(function () {
+            $(".chosen-select").chosen().change(function () {
+                service = $('.chosen-select').val();
+                $('.current_model').html(service);
+                service = service.toLowerCase();
+                $('.current_name').html(service);
+
+            });
+            ;
+        });
+    });
+
 </script>
 
 <body>
+
+<h1>Admin menu</h1>
+<label for="model_name">Select model:</label>
+<div id="model_name">
+    <select class="chosen-select" name="select_model_name" style="width:200px;">
+        <option value="Cat">Cat</option>
+        <%--<option value="News">News</option>--%>
+        <option value="Tags">Tags</option>
+        <option value="NewsCategory">NewsCategory</option>
+    </select>
+</div>
+</br>
+
 <table class="table">
     <tr>
         <th>Request's type</th>
@@ -84,8 +117,8 @@
         <th>Value</th>
     </tr>
     <tr>
-        <td>Add cat's</td>
-        <td><code><strong>PUT </strong>/cat/add</code></td>
+        <td>Add <span class="current_model">Cat</span>'s</td>
+        <td><code><strong>PUT </strong>/<span class="current_name">cat</span>/add</code></td>
         <td>
             <form class="form-inline">
                 name: <input type="text" id="putName" value="catName">
@@ -95,26 +128,26 @@
         </td>
     </tr>
     <tr>
-        <td>GET Cat by ID</td>
-        <td><code><strong>GET </strong>/cat/get/id/{id}</code></td>
+        <td>GET <span class="current_model">Cat</span> by ID</td>
+        <td><code><strong>GET </strong>/<span class="current_name">cat</span>/get/id/{id}</code></td>
         <td>
-            Id: <input id="getCatById" value=""/>
-            <button type="button" onclick="RestGet($('#getCatById').val())">Try</button>
+            Id: <input id="getById" value=""/>
+            <button type="button" onclick="RestGet($('#getById').val())">Try</button>
         </td>
     </tr>
     <tr>
-        <td>Get all cats</td>
-        <td><code><strong>GET All </strong>/cat/all</code></td>
+        <td>Get all <span class="current_name">cat</span></td>
+        <td><code><strong>GET All </strong>/<span class="current_name">cat</span>/all</code></td>
         <td>
             <button type="button" onclick="RestGetAll()">Try</button>
         </td>
     </tr>
     <tr>
-        <td>Delete Cat by Id</td>
-        <td><code><strong>DELETE </strong>/cat/delete/{id}</code></td>
+        <td>Delete <span class="current_model">Cat</span> by Id</td>
+        <td><code><strong>DELETE </strong>/<span class="current_name">cat</span>/delete/{id}</code></td>
         <td>
-            Id: <input id="CatIdForDelete" value=""/>
-            <button type="button" onclick="RestDelete($('#CatIdForDelete').val())">Try</button>
+            Id: <input id="IdForDelete" value=""/>
+            <button type="button" onclick="RestDelete($('#IdForDelete').val())">Try</button>
         </td>
     </tr>
 </table>

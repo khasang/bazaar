@@ -1,17 +1,17 @@
 package io.khasang.bazaar;
 
-import io.khasang.bazaar.entity.Cat;
-import io.khasang.bazaar.entity.CatWoman;
-import org.junit.Test;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
+        import io.khasang.bazaar.entity.Cat;
+        import io.khasang.bazaar.entity.CatWoman;
+        import org.junit.Test;
+        import org.springframework.core.ParameterizedTypeReference;
+        import org.springframework.http.*;
+        import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+        import static org.junit.Assert.assertEquals;
+        import static org.junit.Assert.assertNotNull;
 
 public class CatControllerIntegrationTest {
     private final String ROOT = "http://localhost:8080/cat";

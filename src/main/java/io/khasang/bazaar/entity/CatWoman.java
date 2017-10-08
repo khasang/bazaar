@@ -15,6 +15,9 @@ public class CatWoman {
 
     private String name;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Cat cat;
+
     public Long getId() {
         return id;
     }
@@ -29,5 +32,13 @@ public class CatWoman {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Cat getCat() {
+        return cat;
+    }
+
+    public void setCat(Cat cat) {
+        this.cat = cat;
     }
 }

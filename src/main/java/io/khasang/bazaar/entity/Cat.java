@@ -22,7 +22,7 @@ public class Cat {
     @Transient
     private int age;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cat", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CatWoman> catWomanList = new ArrayList<>();
 
 

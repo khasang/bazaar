@@ -33,6 +33,7 @@ public class CatWomanControllerIntegrationTest {
                 catWoman.getId()
         );
         CatWoman receivedCat = responseEntity.getBody();
+        assertEquals("Murka", receivedCat.getCat().getCatWomanList().get(0).getName());
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(receivedCat);
         assertNotNull(receivedCat.getCat());

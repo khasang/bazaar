@@ -41,4 +41,19 @@ public class CatWoman {
     public void setCat(Cat cat) {
         this.cat = cat;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CatWoman catWoman = (CatWoman) o;
+
+        return id != null ? id.equals(catWoman.id) : catWoman.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

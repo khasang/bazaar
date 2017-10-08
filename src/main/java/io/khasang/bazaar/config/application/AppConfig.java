@@ -1,7 +1,10 @@
 package io.khasang.bazaar.config.application;
 
+import io.khasang.bazaar.dao.BasketDao;
 import io.khasang.bazaar.dao.CatDao;
+import io.khasang.bazaar.dao.impl.BasketDaoImpl;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
+import io.khasang.bazaar.entity.Basket;
 import io.khasang.bazaar.entity.Cat;
 import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,4 +59,10 @@ public class AppConfig {
     public CatDao catDao(){
         return new CatDaoImpl(Cat.class);
     }
+
+    @Bean
+    public BasketDao basketDAO(){
+        return new BasketDaoImpl(Basket.class);
+    }
+
 }

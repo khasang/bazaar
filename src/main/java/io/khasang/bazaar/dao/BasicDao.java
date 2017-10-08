@@ -28,7 +28,7 @@ public interface BasicDao<T> {
      * @param entity - entity for creation
      * @return entity
      */
-    T addCat(T entity);
+    T add(T entity);
 
     /**
      * Create entity at database
@@ -36,7 +36,7 @@ public interface BasicDao<T> {
      * @param entity - entity for creation
      * @return entity
      */
-    T updateCat(T entity);
+    T update(T entity);
 
     /**
      * Receive all entities from database

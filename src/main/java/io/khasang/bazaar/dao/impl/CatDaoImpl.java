@@ -13,6 +13,6 @@ public class CatDaoImpl extends BasicDaoImpl<Cat> implements CatDao {
     @Override
     public List<Cat> getCatsByName(String name) {
         return (List<Cat>) sessionFactory.getCurrentSession().
-                createQuery("from Cat as c where c.name = :paramName").setParameter("paramName", name).list();
+                createQuery("from Cat as c where c.name = ?").setParameter(0, name).list();
     }
 }

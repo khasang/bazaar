@@ -35,5 +35,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").access("hasRole('USER')")
                 .and().csrf().disable().formLogin().defaultSuccessUrl("/", false);
     }
-
 }

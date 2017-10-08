@@ -3,9 +3,6 @@ package io.khasang.bazaar.entity;
 import javax.persistence.*;
 import java.sql.Date;
 
-/**
- * Created by Viktor on 04.10.2017.
- */
 @Entity
 @Table(name = "discounts")
 public class Discount {
@@ -21,11 +18,9 @@ public class Discount {
     private String promoCode;
 
     @Column(name = "start_date")
-    //@Temporal(value = TemporalType.DATE)
     private Date startDate;
 
     @Column(name = "end_date")
-    //@Temporal(value = TemporalType.DATE)
     private Date endDate;
 
     public Discount() {

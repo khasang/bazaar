@@ -13,9 +13,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Viktor on 04.10.2017.
- */
 public class DiscountControllerIntegrationTest {
     private final String ROOT = "http://localhost:8080/discount";
     private final String ADD = "/add";
@@ -62,7 +59,6 @@ public class DiscountControllerIntegrationTest {
                 new ParameterizedTypeReference<List<Discount>>() {
                 }
         );
-
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertNotNull(result.getBody());
     }
@@ -206,6 +202,5 @@ public class DiscountControllerIntegrationTest {
         assertNotNull(changedDiscount.getId());
 
         return changedDiscount;
-
     }
 }

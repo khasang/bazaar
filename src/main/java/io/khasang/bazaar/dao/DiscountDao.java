@@ -3,9 +3,6 @@ package io.khasang.bazaar.dao;
 import io.khasang.bazaar.entity.Discount;
 import java.util.List;
 
-/**
- * Created by Viktor on 04.10.2017.
- */
 public interface DiscountDao extends BasicDao<Discount> {
     /**
      * Receive discounts from database with specified promo code

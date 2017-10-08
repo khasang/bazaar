@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by Viktor on 04.10.2017.
- */
 @Service("discountService")
 public class DiscountServiceImpl implements DiscountService {
 

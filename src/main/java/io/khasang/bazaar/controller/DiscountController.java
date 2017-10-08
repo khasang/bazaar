@@ -1,6 +1,5 @@
 package io.khasang.bazaar.controller;
 
-
 import io.khasang.bazaar.entity.Discount;
 import io.khasang.bazaar.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Created by Viktor on 04.10.2017.
- */
 @Controller
 @RequestMapping(value = "/discount")
 public class DiscountController {
@@ -64,6 +60,4 @@ public class DiscountController {
 
         return discountService.getDiscountsByPromoCode(promoCode);
     }
-
 }
-

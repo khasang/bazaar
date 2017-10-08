@@ -33,7 +33,7 @@ public class CatWomanControllerIntegrationTest {
                 catWoman.getId()
         );
         CatWoman receivedCat = responseEntity.getBody();
-        assertEquals("Murka", receivedCat.getCat().getCatWomanList().get(0).getName());
+        assertEquals("Murka", receivedCat.getCat().getCatWomanList().get(1).getName());
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(receivedCat);
         assertNotNull(receivedCat.getCat());
@@ -92,10 +92,19 @@ public class CatWomanControllerIntegrationTest {
         cat.setName("Barsik");
         cat.setDescription("ManyToOne");
 
-        CatWoman catWoman = new CatWoman();
-        catWoman.setName("MurkaManyToOne");
-        catWoman.setCat(cat);
+        CatWoman catWoman1 = new CatWoman();
+        catWoman1.setName("Riska");
+        catWoman1.setCat(cat);
 
-        return catWoman;
+        CatWoman catWoman2 = new CatWoman();
+        catWoman2.setName("Murka");
+        catWoman2.setCat(cat);
+
+        List<CatWoman> list = new ArrayList<>();
+        list.add(catWoman1);
+        list.add(catWoman2);
+        cat.setCatWomanList(list);
+
+        return catWoman1;
     }
 }

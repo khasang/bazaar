@@ -103,7 +103,7 @@
 <div id="model_name">
     <select class="chosen-select" name="select_model_name" style="width:200px;">
         <option value="Cat">Cat</option>
-        <%--<option value="News">News</option>--%>
+        <option value="News">News</option>
         <option value="Tags">Tags</option>
         <option value="NewsCategory">NewsCategory</option>
     </select>

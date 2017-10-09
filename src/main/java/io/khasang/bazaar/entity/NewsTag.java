@@ -1,18 +1,14 @@
 package io.khasang.bazaar.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Table(name = "news_tags")
 public class NewsTag {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "news_tag_id")
     private Long id;
 
-    @Column(nullable = false, name = "tag_name")
+    @Column(nullable = false, name = "name")
     private String name;
 
     public Long getId() {

@@ -20,19 +20,19 @@ public class NewsController {
 
     @RequestMapping(value = "/get/id/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public News getCatById(@PathVariable(value = "id") String id) {
+    public News getById(@PathVariable(value = "id") String id) {
         return newsService.getById(Long.parseLong(id));
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public News addCat(@RequestBody News news) {
+    public News addNews(@RequestBody News news) {
         return newsService.add(news);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public List<News> getCats() {
+    public List<News> getNews() {
         return newsService.getList();
     }
 

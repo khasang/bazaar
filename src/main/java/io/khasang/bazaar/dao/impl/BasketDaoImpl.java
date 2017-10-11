@@ -5,7 +5,7 @@ import io.khasang.bazaar.entity.Basket;
 
 import java.util.List;
 
-public class BasketDaoImpl extends BasicDaoImpl implements BasketDao {
+public class BasketDaoImpl extends BasicDaoImpl<Basket> implements BasketDao {
 
     public BasketDaoImpl(Class<Basket> entityClass) {
         super(entityClass);

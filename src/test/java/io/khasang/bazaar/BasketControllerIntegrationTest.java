@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class BasketControllerIntegrationTest {
 
-    private final String ROOT = "http://localhost:8080/goods";
+    private final String ROOT = "http://localhost:8080/basket";
     private final String GET_BY_ID = "/get/id";
     private final String ADD = "/add";
     private final String UPDATE = "/update";
@@ -149,9 +149,9 @@ public class BasketControllerIntegrationTest {
                 httpEntity,
                 Basket.class).getBody();
         assertNotNull(createdBasket);
-        assertEquals(new Integer(3), createdBasket.getGoodsid());
-        assertEquals(new Integer(000003), createdBasket.getOrderid());
-        assertEquals(new Integer(3), createdBasket.getUserid());
+        assertEquals(new Integer(1), createdBasket.getGoodsid());
+        assertEquals(new Integer(000001), createdBasket.getOrderid());
+        assertEquals(new Integer(1), createdBasket.getUserid());
         assertEquals(new Integer(1), createdBasket.getOrdernotissued());
         assertEquals(new Integer(0), createdBasket.getOrderissued());
         assertNotNull(createdBasket.getId());

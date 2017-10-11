@@ -15,7 +15,7 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public Basket getBasketById(Long id) {
-        return (Basket) basketDао.getById(id);
+        return basketDао.getById(id);
     }
 
     @Override
@@ -25,32 +25,33 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public Basket addGoodsInBasket(Basket basket) {
-        return (Basket) basketDао.add(basket);
+        return basketDао.add(basket);
     }
 
     @Override
     public Basket updateBasket(Basket basket) {
-        return (Basket) basketDао.update(basket);
+        return basketDао.update(basket);
     }
 
     @Override
     public Basket deleteGoodsInBasket(Long id) {
-        return (Basket) basketDао.delete(id);
+        Basket basket = basketDао.getById(id);
+        return basketDао.delete(basket);
     }
 
     @Override
     public Basket orderNotIssued(Long id, Integer ordernotissued) {
-        Basket basket = (Basket) basketDао.getById(id);
+        Basket basket = basketDао.getById(id);
         basket.setOrdernotissued(basket.getOrdernotissued() + ordernotissued);
-        return (Basket) basketDао.update(basket);
+        return basketDао.update(basket);
     }
 
     @Override
     public Basket orderIssued(Long id, Integer orderissued) {
-        Basket basket = (Basket) basketDао.getById(id);
+        Basket basket = basketDао.getById(id);
         basket.setOrdernotissued(basket.getOrdernotissued() - orderissued);
         basket.setOrderissued(basket.getOrderissued() + orderissued);
-        return (Basket) basketDао.update(basket);
+        return basketDао.update(basket);
     }
 
 }

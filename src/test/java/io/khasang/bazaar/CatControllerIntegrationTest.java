@@ -58,7 +58,7 @@ public class CatControllerIntegrationTest {
         assertNotNull(result.getBody());
     }
 
-    private Cat createCat() {
+    public Cat createCat() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
@@ -93,7 +93,7 @@ public class CatControllerIntegrationTest {
         List<CatWoman> list = new ArrayList<>();
         list.add(catWoman1);
         list.add(catWoman2);
-        cat.setCatWomanList(list);
+//        cat.setCatWomanList(list);
 
         return cat;
     }

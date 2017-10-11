@@ -20,9 +20,21 @@ public class CatWomanControllerIntegrationTest {
     private final String GET_BY_ID = "/get/id";
     private final String GET_ALL = "/all";
 
+    private final CatControllerIntegrationTest forCat = new CatControllerIntegrationTest();
+
     @Test
     public void addCat() {
-        CatWoman catWoman = createCatWoman();
+        CatWoman catWoman = createCatWoman("Murka");
+
+        RestTemplate restTemplate1 = new RestTemplate();
+        ResponseEntity<Cat> responseEntity1 = restTemplate1.exchange(
+                ROOT_CAT + GET_BY_ID + "/{id}",
+                HttpMethod.GET,
+                null,
+                Cat.class,
+                5
+        );
+        Cat receivedCat = responseEntity1.getBody();
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<CatWoman> responseEntity = restTemplate.exchange(
@@ -32,28 +44,29 @@ public class CatWomanControllerIntegrationTest {
                 CatWoman.class,
                 catWoman.getId()
         );
-        CatWoman receivedCat = responseEntity.getBody();
-        assertEquals("Murka", receivedCat.getCat().getCatWomanList().get(1).getName());
+        CatWoman receivedCatWoman = responseEntity.getBody();
+        assertEquals("Murka", catWoman.getName());
+        assertEquals("Murka", receivedCatWoman.getCat().getCatWomanList().get(0).getName());
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
-        assertNotNull(receivedCat);
-        assertNotNull(receivedCat.getCat());
+        assertNotNull(receivedCatWoman);
+        assertNotNull(receivedCatWoman.getCat());
         assertEquals("Barsik", restTemplate.exchange(
                 ROOT_CAT + GET_BY_ID + "/{id}",
                 HttpMethod.GET,
                 null,
                 Cat.class,
-                receivedCat.getCat().getId()
+                receivedCatWoman.getCat().getId()
         ).getBody().getName());
-        assertEquals("Barsik", receivedCat.getCat().getName());
-        assertEquals(catWoman.getName(), receivedCat.getName());
+        assertEquals("Barsik", receivedCatWoman.getCat().getName());
+        assertEquals(catWoman.getName(), receivedCatWoman.getName());
 
     }
 
     @Test
     public void getAllCats() {
         RestTemplate restTemplate = new RestTemplate();
-        createCatWoman();
-        createCatWoman();
+        createCatWoman("Murka");
+        createCatWoman("Riska");
 
         ResponseEntity<List<CatWoman>> result = restTemplate.exchange(
                 ROOT + GET_ALL,
@@ -67,11 +80,12 @@ public class CatWomanControllerIntegrationTest {
         assertNotNull(result.getBody());
     }
 
-    private CatWoman createCatWoman() {
+    private CatWoman createCatWoman(String name) {
+        Cat cat = forCat.createCat();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        CatWoman catWoman = prefillCatWoman();
+        CatWoman catWoman = prefillCatWoman(cat, name);
         HttpEntity<CatWoman> httpEntity = new HttpEntity<>(catWoman, httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -81,30 +95,15 @@ public class CatWomanControllerIntegrationTest {
                 httpEntity,
                 CatWoman.class).getBody();
         assertNotNull(createdCatWoman);
-        assertEquals("MurkaManyToOne", createdCatWoman.getName());
         assertNotNull(createdCatWoman.getId());
 
         return createdCatWoman;
     }
 
-    private CatWoman prefillCatWoman() {
-        Cat cat = new Cat();
-        cat.setName("Barsik");
-        cat.setDescription("ManyToOne");
-
+    private CatWoman prefillCatWoman(Cat cat, String name) {
         CatWoman catWoman1 = new CatWoman();
-        catWoman1.setName("Riska");
+        catWoman1.setName(name);
         catWoman1.setCat(cat);
-
-        CatWoman catWoman2 = new CatWoman();
-        catWoman2.setName("Murka");
-        catWoman2.setCat(cat);
-
-        List<CatWoman> list = new ArrayList<>();
-        list.add(catWoman1);
-        list.add(catWoman2);
-        cat.setCatWomanList(list);
-
         return catWoman1;
     }
 }

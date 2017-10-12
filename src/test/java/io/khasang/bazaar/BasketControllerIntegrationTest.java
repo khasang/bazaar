@@ -150,7 +150,7 @@ public class BasketControllerIntegrationTest {
                 Basket.class).getBody();
         assertNotNull(createdBasket);
         assertEquals(new Integer(1), createdBasket.getGoodsid());
-        assertEquals(new Integer(000001), createdBasket.getOrderid());
+        assertEquals(new Integer(1), createdBasket.getOrderid());
         assertEquals(new Integer(1), createdBasket.getUserid());
         assertEquals(new Integer(1), createdBasket.getOrdernotissued());
         assertEquals(new Integer(0), createdBasket.getOrderissued());
@@ -162,7 +162,7 @@ public class BasketControllerIntegrationTest {
     private Basket prefillBasket() {
         Basket basket = new Basket();
         basket.setGoodsid(1);
-        basket.setOrderid(000001);
+        basket.setOrderid(1);
         basket.setUserid(1);
         basket.setOrdernotissued(1);
         basket.setOrderissued(0);
@@ -171,7 +171,7 @@ public class BasketControllerIntegrationTest {
 
     private Basket changeBasket(Basket basket) {
         basket.setGoodsid(2);
-        basket.setOrderid(000002);
+        basket.setOrderid(2);
         basket.setOrdernotissued(0);
         basket.setOrderissued(1);
 
@@ -188,7 +188,7 @@ public class BasketControllerIntegrationTest {
                 Basket.class).getBody();
         assertNotNull(changedBasket);
         assertEquals(new Integer(1), changedBasket.getGoodsid());
-        assertEquals(new Integer(000001), changedBasket.getOrderid());
+        assertEquals(new Integer(1), changedBasket.getOrderid());
         assertEquals(new Integer(1), changedBasket.getUserid());
         assertEquals(new Integer(1), changedBasket.getOrdernotissued());
         assertEquals(new Integer(0), changedBasket.getOrderissued());
@@ -218,9 +218,9 @@ public class BasketControllerIntegrationTest {
                 httpEntity,
                 Basket.class).getBody();
         assertNotNull(orderIssued);
-        assertEquals(new Integer(3), orderIssued.getGoodsid());
-        assertEquals(new Integer(000003), orderIssued.getOrderid());
-        assertEquals(new Integer(3), orderIssued.getUserid());
+        assertEquals(new Integer(1), orderIssued.getGoodsid());
+        assertEquals(new Integer(1), orderIssued.getOrderid());
+        assertEquals(new Integer(1), orderIssued.getUserid());
         assertEquals(new Integer(1), orderIssued.getOrdernotissued());
         assertEquals(new Integer(0), orderIssued.getOrderissued());
         assertNotNull(orderIssued.getId());
@@ -248,10 +248,10 @@ public class BasketControllerIntegrationTest {
                 httpEntity,
                 Basket.class).getBody();
         assertNotNull(ordernotissued);
-        assertEquals(new Integer(3), ordernotissued.getGoodsid());
-        assertEquals(new Integer(000003), ordernotissued.getOrderid());
-        assertEquals(new Integer(3), ordernotissued.getUserid());
-        assertEquals(new Integer(0), ordernotissued.getOrdernotissued());
+        assertEquals(new Integer(1), ordernotissued.getGoodsid());
+        assertEquals(new Integer(1), ordernotissued.getOrderid());
+        assertEquals(new Integer(1), ordernotissued.getUserid());
+        assertEquals(new Integer(1), ordernotissued.getOrdernotissued());
         assertEquals(new Integer(0), ordernotissued.getOrderissued());
         assertNotNull(ordernotissued.getId());
 

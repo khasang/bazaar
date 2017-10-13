@@ -1,8 +1,11 @@
 package io.khasang.bazaar.config.application;
 
 import io.khasang.bazaar.dao.CatDao;
+import io.khasang.bazaar.dao.UserDao;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
+import io.khasang.bazaar.dao.impl.UserDaoImpl;
 import io.khasang.bazaar.entity.Cat;
+import io.khasang.bazaar.entity.User;
 import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -56,4 +59,10 @@ public class AppConfig {
     public CatDao catDao(){
         return new CatDaoImpl(Cat.class);
     }
+
+    @Bean
+    public UserDao userDao(){
+        return new UserDaoImpl(User.class);
+    }
+
 }

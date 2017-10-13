@@ -15,7 +15,7 @@ public class CatWoman {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cat cat;
 
     public Long getId() {

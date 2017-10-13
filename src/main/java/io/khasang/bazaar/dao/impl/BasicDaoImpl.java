@@ -38,6 +38,7 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
         return entity;
     }
 
+    //SELECT * FROM CATS
     @Override
     public List<T> getList() {
         CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();

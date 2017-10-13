@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Service interface for Goods entity.
+ *
  * @author Zulfia Garifullina
  * @date 04.10.2017.
  */

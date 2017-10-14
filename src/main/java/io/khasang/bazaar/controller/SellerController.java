@@ -30,10 +30,10 @@ public class SellerController {
         return sellerService.getById(Long.parseLong(id));
     }
 
-    @RequestMapping(value = "/get/name/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/login/{login}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Seller> getSellersByName(@PathVariable(value = "name") String name) {
-        return sellerService.getSellersByName(name);
+    public List<Seller> getSellerByLogin(@PathVariable(value = "login") String login) {
+        return sellerService.getSellerByLogin(login);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")

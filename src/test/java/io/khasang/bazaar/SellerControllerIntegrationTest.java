@@ -23,13 +23,13 @@ public class SellerControllerIntegrationTest {
     private final String UPDATE = "/update";
     private final String DELETE = "/delete";
     private final String GET_BY_ID = "/get/id";
-    private final String GET_BY_NAME = "/get/name";
+    private final String GET_BY_LOGIN = "/get/login";
     private final String GET_ALL = "/all";
     private final String INCREASE_BALANCE = "/increase/balance";
 
     @Test
     public void addSeller() {
-        Seller seller = createSeller();
+        Seller seller = createSeller("ivanov");
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Seller> responseEntity = restTemplate.exchange(
@@ -43,14 +43,14 @@ public class SellerControllerIntegrationTest {
         Seller receivedSeller = responseEntity.getBody();
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(receivedSeller);
-        assertEquals(seller.getName(), receivedSeller.getName());
+        assertEquals(seller.getLogin(), receivedSeller.getLogin());
         assertEquals(seller.getBalance(), receivedSeller.getBalance());
         assertEquals(seller.getRoleId(), receivedSeller.getRoleId());
     }
 
     @Test
     public void updateSeller() {
-        Seller seller = createSeller();
+        Seller seller = createSeller("petrov");
         Seller changedSeller = changeSeller(seller);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -65,14 +65,14 @@ public class SellerControllerIntegrationTest {
         Seller receivedSeller = responseEntity.getBody();
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(receivedSeller);
-        assertEquals(changedSeller.getName(), receivedSeller.getName());
+        assertEquals(changedSeller.getLogin(), receivedSeller.getLogin());
         assertEquals(changedSeller.getBalance(), receivedSeller.getBalance());
         assertEquals(changedSeller.getRoleId(), receivedSeller.getRoleId());
     }
 
     @Test
     public void deleteSeller() {
-        Seller seller = createSeller();
+        Seller seller = createSeller("ivanov123");
         RestTemplate restTemplate = new RestTemplate();
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ROOT + DELETE)
@@ -94,29 +94,32 @@ public class SellerControllerIntegrationTest {
     }
 
     @Test
-    public void getSellersByName() {
-        Seller seller = createSeller();
-        createSeller();
+    public void getSellerByLogin() {
+        Seller seller = createSeller("ser_ivanov");
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Seller>> result = restTemplate.exchange(
-                ROOT + GET_BY_NAME + "/{name}",
+                ROOT + GET_BY_LOGIN + "/{login}",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Seller>>() {
                 },
-                seller.getName()
+                seller.getLogin()
         );
 
+        //Seller receivedSeller = responseEntity.getBody();
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertNotNull(result.getBody());
+        /*assertEquals(seller.getLogin(), receivedSeller.getLogin());
+        assertEquals(seller.getBalance(), receivedSeller.getBalance());
+        assertEquals(seller.getRoleId(), receivedSeller.getRoleId());*/
     }
 
     @Test
     public void getAllSellers() {
         RestTemplate restTemplate = new RestTemplate();
-        createSeller();
-        createSeller();
+        createSeller("sidorov_1");
+        createSeller("sidorov_2");
 
         ResponseEntity<List<Seller>> result = restTemplate.exchange(
                 ROOT + GET_ALL,
@@ -133,7 +136,7 @@ public class SellerControllerIntegrationTest {
 
     @Test
     public void increaseSellerBalance() {
-        Seller seller = createSeller();
+        Seller seller = createSeller("petrov123");
         Seller sellerWithIncreasedBalance = increaseBalance(seller);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -148,16 +151,16 @@ public class SellerControllerIntegrationTest {
         Seller receivedSeller = responseEntity.getBody();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(receivedSeller);
-        assertEquals(sellerWithIncreasedBalance.getName(), receivedSeller.getName());
+        assertEquals(sellerWithIncreasedBalance.getLogin(), receivedSeller.getLogin());
         assertEquals(sellerWithIncreasedBalance.getBalance(), receivedSeller.getBalance());
         assertEquals(sellerWithIncreasedBalance.getRoleId(), receivedSeller.getRoleId());
     }
 
-    private Seller createSeller() {
+    private Seller createSeller(String login) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        Seller seller = prefillSeller();
+        Seller seller = prefillSeller(login);
         HttpEntity<Seller> HttpEntity = new HttpEntity<>(seller, httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -167,7 +170,7 @@ public class SellerControllerIntegrationTest {
                 HttpEntity,
                 Seller.class).getBody();
         assertNotNull(createdSeller);
-        assertEquals("Ivan Ivanov", createdSeller.getName());
+        assertEquals(login, createdSeller.getLogin());
         assertEquals(Integer.valueOf(500), createdSeller.getBalance());
         assertEquals(Long.valueOf(3), createdSeller.getRoleId());
         assertNotNull(createdSeller.getId());
@@ -175,16 +178,16 @@ public class SellerControllerIntegrationTest {
         return createdSeller;
     }
 
-    private Seller prefillSeller() {
+    private Seller prefillSeller(String login) {
         Seller seller = new Seller();
-        seller.setName("Ivan Ivanov");
+        seller.setLogin(login);
         seller.setBalance(500);
         seller.setRoleId((long) 3);
         return seller;
     }
 
     private Seller changeSeller(Seller seller) {
-        seller.setName("Ivan Sidorov");
+        seller.setLogin("sidorov");
         seller.setBalance(1000);
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -199,7 +202,7 @@ public class SellerControllerIntegrationTest {
                 httpEntity,
                 Seller.class).getBody();
         assertNotNull(changedSeller);
-        assertEquals("Ivan Sidorov", changedSeller.getName());
+        assertEquals("sidorov", changedSeller.getLogin());
         assertEquals(Integer.valueOf(1000), changedSeller.getBalance());
         assertEquals(Long.valueOf(3), changedSeller.getRoleId());
         assertNotNull(changedSeller.getId());
@@ -227,7 +230,7 @@ public class SellerControllerIntegrationTest {
                 Seller.class).getBody();
 
         assertNotNull(sellerWithIncreasedBalance);
-        assertEquals("Ivan Ivanov", sellerWithIncreasedBalance.getName());
+        assertEquals("petrov123", sellerWithIncreasedBalance.getLogin());
         assertEquals(Integer.valueOf(850), sellerWithIncreasedBalance.getBalance());
         assertEquals(Long.valueOf(3), sellerWithIncreasedBalance.getRoleId());
         assertNotNull(sellerWithIncreasedBalance.getId());

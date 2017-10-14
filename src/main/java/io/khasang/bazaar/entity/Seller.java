@@ -1,8 +1,6 @@
 package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class describes a database entity that represents a seller.
@@ -18,8 +16,8 @@ public class Seller {
     @Column(name = "seller_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String login;
 
     private Integer balance;
 
@@ -37,20 +35,12 @@ public class Seller {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public Integer getBalance() {
@@ -61,6 +51,14 @@ public class Seller {
         this.balance = balance;
     }
 
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,7 +67,7 @@ public class Seller {
         Seller seller = (Seller) o;
 
         if (id != null ? !id.equals(seller.id) : seller.id != null) return false;
-        if (name != null ? !name.equals(seller.name) : seller.name != null) return false;
+        if (login != null ? !login.equals(seller.login) : seller.login != null) return false;
         if (balance != null ? !balance.equals(seller.balance) : seller.balance != null) return false;
         return roleId != null ? roleId.equals(seller.roleId) : seller.roleId == null;
     }
@@ -77,7 +75,7 @@ public class Seller {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (balance != null ? balance.hashCode() : 0);
         result = 31 * result + (roleId != null ? roleId.hashCode() : 0);
         return result;

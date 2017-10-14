@@ -22,8 +22,8 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public List<Seller> getSellersByName(String name) {
-        return sellerDao.getSellersByName(name);
+    public List<Seller> getSellerByLogin(String login) {
+        return sellerDao.getSellerByLogin(login);
     }
 
     @Override

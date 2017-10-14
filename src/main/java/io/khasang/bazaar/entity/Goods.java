@@ -1,5 +1,6 @@
 package io.khasang.bazaar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
@@ -20,12 +21,15 @@ public class Goods {
     @Column(nullable = false)
     private String name;
 
+    private String description;
+    private Integer price;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private GoodsCategory category;
 
-    private String description;
-    private Integer price;
+    @Column(name = "seller_login")
+    private String sellerLogin;
 
     @Column(name = "quantity_in_stock")
     private Integer quantityInStock;
@@ -79,14 +83,6 @@ public class Goods {
         this.name = name;
     }
 
-    public GoodsCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(GoodsCategory category) {
-        this.category = category;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -101,6 +97,23 @@ public class Goods {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public GoodsCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(GoodsCategory category) {
+        this.category = category;
+    }
+
+    public String getSellerLogin() {
+        return sellerLogin;
+    }
+
+    @JsonIgnore
+    public void setSellerLogin(String sellerLogin) {
+        this.sellerLogin = sellerLogin;
     }
 
     public Integer getQuantityInStock() {

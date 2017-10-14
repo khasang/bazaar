@@ -19,11 +19,11 @@ public interface SellerService {
     Seller getById(Long id);
 
     /**
-     * Method for retrieving sellers from the database by their name.
-     * @param name - name of the sellers
-     * @return all the sellers with the given name
+     * Method for retrieving seller from the database by their login.
+     * @param login - login of the seller
+     * @return seller with the given login
      */
-    List<Seller> getSellersByName(String name);
+    List<Seller> getSellerByLogin(String login);
 
     /**
      * Method for adding new seller to the database table

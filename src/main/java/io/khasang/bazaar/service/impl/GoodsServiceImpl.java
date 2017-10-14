@@ -3,7 +3,10 @@ package io.khasang.bazaar.service.impl;
 import io.khasang.bazaar.dao.GoodsDao;
 import io.khasang.bazaar.entity.Goods;
 import io.khasang.bazaar.service.GoodsService;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsDao goodsDao;
 
+    @Autowired
+    protected SessionFactory sessionFactory;
+
     @Override
     public Goods getById(Long id) {
         return goodsDao.getById(id);
@@ -30,6 +36,8 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Goods addGoods(Goods goods) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        goods.setSellerLogin(auth.getName());
         return goodsDao.add(goods);
     }
 

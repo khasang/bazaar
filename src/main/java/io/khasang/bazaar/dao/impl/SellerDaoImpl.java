@@ -17,7 +17,8 @@ public class SellerDaoImpl extends BasicDaoImpl<Seller> implements SellerDao {
     }
 
     @Override
-    public List<Seller> getSellersByName(String name) {
-        return (List<Seller>) getCurrentSession().createQuery("from Seller as s where s.name = ?").setParameter(0, name).list();
+    public List<Seller> getSellerByLogin(String login) {
+
+        return (List<Seller>) getCurrentSession().createQuery("from Seller where login = ?").setParameter(0, login).list();
     }
 }

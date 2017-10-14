@@ -3,13 +3,16 @@ package io.khasang.bazaar.config.application;
 import io.khasang.bazaar.dao.CatDao;
 import io.khasang.bazaar.dao.NewsDao;
 import io.khasang.bazaar.dao.NewsTagDao;
+import io.khasang.bazaar.dao.SellerDao;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
 import io.khasang.bazaar.dao.impl.NewsDaoImpl;
 import io.khasang.bazaar.dao.impl.NewsTagDaoImpl;
+import io.khasang.bazaar.dao.impl.SellerDaoImpl;
 import io.khasang.bazaar.entity.Cat;
 import io.khasang.bazaar.entity.News;
 import io.khasang.bazaar.entity.NewsTag;
-import io.khasang.bazaar.model.*;
+import io.khasang.bazaar.entity.Seller;
+import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,4 +76,8 @@ public class AppConfig {
         return new NewsTagDaoImpl(NewsTag.class);
     }
 
+    @Bean
+    public SellerDao sellerDao() {
+        return new SellerDaoImpl(Seller.class);
+    }
 }

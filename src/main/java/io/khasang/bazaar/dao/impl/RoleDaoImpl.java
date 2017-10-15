@@ -16,10 +16,10 @@ public class RoleDaoImpl extends BasicDaoImpl<Role> implements RoleDao {
                 createQuery("from Role as r where r.roleName = ?").setParameter(0, roleName).list();
     }
 
-    public List<Role> getRolesByRoleID(Integer roleID) {
+    public List<Role> getRolesByRoleId(String roleId) {
         //TODO: Warning unchecked cast List to List<Role> because createQuery(...) return has raw type, so result of list is erased
         return (List<Role>) sessionFactory.getCurrentSession().
-                createQuery("from Role as r where r.roleID = ?").setParameter(0, roleID.intValue()).list();
+                createQuery("from Role as r where r.roleID = ?").setParameter(0, Integer.parseInt(roleId)).list();
     }
 
     public List<Role> getRolesByIsActive(Boolean isActive) {
@@ -27,4 +27,5 @@ public class RoleDaoImpl extends BasicDaoImpl<Role> implements RoleDao {
         return (List<Role>) sessionFactory.getCurrentSession().
                 createQuery("from Role as r where r.isactive = ?").setParameter(0, isActive.booleanValue()).list();
     }
+
 }

@@ -34,7 +34,7 @@ public class Role {
     @Column(nullable = false)
     private Integer connectionLimit = -1;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<User> users;
 
     //TODO если отдельно завести полномочия, то как их хранить?
@@ -123,5 +123,18 @@ public class Role {
         result = 31 * result + getConnectionLimit().hashCode();
         result = 31 * result + (getUsers() != null ? getUsers().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                ", roleID=" + roleID +
+                ", superuser=" + superuser +
+                ", isactive=" + isactive +
+                ", connectionLimit=" + connectionLimit +
+                ", users=" + users +
+                '}';
     }
 }

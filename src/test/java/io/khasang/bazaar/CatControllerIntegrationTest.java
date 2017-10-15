@@ -32,7 +32,8 @@ public class CatControllerIntegrationTest {
                 cat.getId()
         );
         Cat receivedCat = responseEntity.getBody();
-        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        //assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(receivedCat);
         assertNotNull(receivedCat.getCatWomanList());
         assertEquals("Murka", receivedCat.getCatWomanList().get(1).getName());

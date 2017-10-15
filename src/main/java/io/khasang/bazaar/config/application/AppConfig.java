@@ -2,10 +2,13 @@ package io.khasang.bazaar.config.application;
 
 import io.khasang.bazaar.dao.CatDao;
 import io.khasang.bazaar.dao.RoleDao;
+import io.khasang.bazaar.dao.UserDao;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
 import io.khasang.bazaar.dao.impl.RoleDaoImpl;
+import io.khasang.bazaar.dao.impl.UserDaoImpl;
 import io.khasang.bazaar.entity.Cat;
 import io.khasang.bazaar.entity.Role;
+import io.khasang.bazaar.entity.User;
 import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @PropertySource(value = "classpath:util.properties")
@@ -64,4 +68,15 @@ public class AppConfig {
     public RoleDao roleDao() {
         return new RoleDaoImpl(Role.class);
     }
+
+    @Bean
+    public UserDao userDao() {
+        return new UserDaoImpl(User.class);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

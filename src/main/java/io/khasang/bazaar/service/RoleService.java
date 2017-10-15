@@ -1,5 +1,6 @@
 package io.khasang.bazaar.service;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.khasang.bazaar.entity.Role;
 import java.util.List;
 
@@ -51,4 +52,17 @@ public interface RoleService {
      */
     Role deleteRole(Long id);
 
+    /**
+     * Receive roles by RoleId
+     *
+     * @param roleId
+     * @return list of the roles with the appropriate RoleId
+     */
+    List<Role> getRolesByRoleId(String roleId);
+
+    /**
+     *
+     *
+     */
+    List<Role> getRolesByIsActive(Boolean isActive);
 }

@@ -13,33 +13,47 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
 
+    public RoleServiceImpl() {
+    }
+
     @Override
     public Role getById(Long id) {
-        return null;
+        return roleDao.getById(id);
     }
 
     @Override
     public Role addRole(Role role) {
-        return null;
+        return roleDao.add(role);
     }
 
     @Override
     public Role updateRole(Role role) {
-        return null;
+        return roleDao.update(role);
     }
 
     @Override
     public List<Role> getRoleList() {
-        return null;
-    }
-
-    @Override
-    public List<Role> getRolesByName(String name) {
         return roleDao.getList();
     }
 
     @Override
     public Role deleteRole(Long id) {
-        return null;
+        return roleDao.delete(roleDao.getById(id));
     }
+
+    public List<Role> getRolesByName(String roleName) {
+        return roleDao.getRolesByName(roleName);
+    }
+
+    @Override
+    public List<Role> getRolesByRoleId(String roleId) {
+        return roleDao.getRolesByRoleId(roleId);
+    }
+
+    @Override
+    public List<Role> getRolesByIsActive(Boolean isActive) {
+        return roleDao.getRolesByIsActive(isActive);
+    }
+
+
 }

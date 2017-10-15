@@ -2,6 +2,7 @@ package io.khasang.bazaar.controller;
 
 import io.khasang.bazaar.model.CreateTable;
 import io.khasang.bazaar.model.Message;
+import io.khasang.bazaar.service.impl.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.soap.SOAPException;
+import java.io.IOException;
+
 @Controller
 //@RequestMapping("/")
 public class AppController {
@@ -21,6 +25,8 @@ public class AppController {
 
     @Autowired
     private CreateTable createTable;
+    @Autowired
+    private CheckService checkService;
 
     // http://localhost:8080/
     @RequestMapping("/")
@@ -47,6 +53,12 @@ public class AppController {
         modelAndView.setViewName("password");
         modelAndView.addObject("crypt", new BCryptPasswordEncoder().encode(password));
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/speller/{word}", method = RequestMethod.GET)
+    public String checkWord(@PathVariable("word") String word, Model model) throws IOException, SOAPException {
+        model.addAttribute("result", checkService.checkWord(word));
+        return "check";
     }
 
 }

@@ -1,11 +1,14 @@
 package io.khasang.bazaar.config.application;
 
+import io.khasang.bazaar.dao.CarsDao;
 import io.khasang.bazaar.dao.CatDao;
 import io.khasang.bazaar.dao.NewsDao;
 import io.khasang.bazaar.dao.NewsTagDao;
+import io.khasang.bazaar.dao.impl.CarsDaoImpl;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
 import io.khasang.bazaar.dao.impl.NewsDaoImpl;
 import io.khasang.bazaar.dao.impl.NewsTagDaoImpl;
+import io.khasang.bazaar.entity.CarsEntity;
 import io.khasang.bazaar.entity.Cat;
 import io.khasang.bazaar.entity.News;
 import io.khasang.bazaar.entity.NewsTag;
@@ -61,6 +64,11 @@ public class AppConfig {
     @Bean
     public CatDao catDao(){
         return new CatDaoImpl(Cat.class);
+    }
+
+    @Bean
+    public CarsDao carsDao(){
+        return new CarsDaoImpl(CarsEntity.class);
     }
 
     @Bean

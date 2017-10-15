@@ -1,11 +1,11 @@
 package io.khasang.bazaar.controller;
 
+import io.khasang.bazaar.model.Inflation;
 import io.khasang.bazaar.service.impl.InflationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/inflation") // http://localhost:8080/inflation/value?amount=900.00&start=2017.05&end=2017.09
@@ -40,10 +40,10 @@ public class InflationController {
         return "inflation";
     }
 
-//    @RequestMapping(value = "/value")
-//    @ResponseBody
-//    String getValueChange(@RequestBody  ) {
-//
-//        return null;
-//    }
+    @RequestMapping(value = "/priceJSON", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    String getValueChangeJSON(@RequestBody Inflation inflation, Model model) {
+        model.addAttribute("result_inflation", inflationService.getPriceChange(inflation.getStartAmount(),
+                inflation.getStartMonth(), inflation.getEndMonth()));
+        return "inflation";
+    }
 }

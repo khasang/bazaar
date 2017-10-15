@@ -23,6 +23,23 @@ public class InflationController {
         return "inflation";
     }
 
+    @RequestMapping
+    public String getValueChange(@RequestParam(value = "start") String startMonth,
+                                 @RequestParam(value = "end") String endMonth,
+                                 Model model) {
+        model.addAttribute("result_inflation", inflationService.getInflation(startMonth, endMonth));
+        return "inflation";
+    }
+
+    @RequestMapping(value = "/price")
+    public String getPriceChange(@RequestParam(value = "start") String startMonth,
+                                 @RequestParam(value = "end") String endMonth,
+                                 @RequestParam(value = "amount") String startAmount,
+                                 Model model) {
+        model.addAttribute("result_inflation", inflationService.getPriceChange(startAmount, startMonth, endMonth));
+        return "inflation";
+    }
+
 //    @RequestMapping(value = "/value")
 //    @ResponseBody
 //    String getValueChange(@RequestBody  ) {

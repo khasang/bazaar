@@ -55,6 +55,15 @@ public class InflationService {
         return resultValueChange.toString();
     }
 
+    public String getInflation(String startMonth, String endMonth) {
+        return inflation.getInflation(getXmlGregorianCalendar(startMonth), getXmlGregorianCalendar(endMonth)).toString();
+    }
+
+    public String getPriceChange(String startAmount, String startMonth, String endMonth) {
+        return inflation.getPriceChange(new BigDecimal(startAmount), getXmlGregorianCalendar(startMonth),
+                getXmlGregorianCalendar(endMonth), true).toString();
+    }
+
     private XMLGregorianCalendar getXmlGregorianCalendar(String month) {
         XMLGregorianCalendar xmlGregorianCalendar =null;
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
@@ -63,7 +72,7 @@ public class InflationService {
             gregorianCalendar.setTime(startDate);
             xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
         } catch (ParseException | DatatypeConfigurationException e) {
-            e.printStackTrace();
+            System.err.println("Ошибка! Не правильный формат даты");
         }
         return xmlGregorianCalendar;
     }

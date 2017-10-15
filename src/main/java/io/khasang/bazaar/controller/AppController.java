@@ -52,11 +52,11 @@ public class AppController {
     }
 
     @RequestMapping(value = {"/password/{password}"}, method = RequestMethod.GET)
-    public ModelAndView passwordEncode(@PathVariable("password") String password) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("password");
-        modelAndView.addObject("crypt", new BCryptPasswordEncoder().encode(password));
-        return modelAndView;
+        public ModelAndView passwordEncode(@PathVariable("password") String password) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("password");
+            modelAndView.addObject("crypt", new BCryptPasswordEncoder().encode(password));
+            return modelAndView;
     }
 
 }

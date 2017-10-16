@@ -28,21 +28,21 @@ public class SupportControllerIntegrationTest {
     private final String RECIPIENT = "/{requests}";
 
     @Test
-    public void addDelivery() {
-        Support addSupport = createDelivery();
-        ResponseEntity<Support> responseEntity = getDeliveryById(addSupport.getId());
+    public void addSupport() {
+        Support addSupport = createSupport();
+        ResponseEntity<Support> responseEntity = getSupportById(addSupport.getId());
         Support receivedSupport = responseEntity.getBody();
 
         assertNotNull(receivedSupport);
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
-        assertEquals(addSupport.getRecipient(), receivedSupport.getRecipient());
-        assertEquals(addSupport.getSender(), receivedSupport.getSender());
+        assertEquals(addSupport.getQuestion(), receivedSupport.getQuestion());
+        assertEquals(addSupport.getResponse(), receivedSupport.getResponse());
     }
 
     @Test
-    public void getDeliveries() {
-        createDelivery();
-        createDelivery();
+    public void getSupport() {
+        createSupport();
+        createSupport();
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Support>> result = restTemplate.exchange(
@@ -57,38 +57,34 @@ public class SupportControllerIntegrationTest {
     }
 
     @Test
-    public void updateDelivery() {
-        Support newSupport = createDelivery();
-        Support prefillSupport = prefillDelivery();
+    public void updateSupport() {
+        Support newSupport = createSupport();
+        Support prefillSupport = prefillSupport();
         prefillSupport.setId(newSupport.getId());
 
 
         ResponseEntity<Support> result = new RestTemplate().exchange(
                 ROOT + UPDATE,
                 HttpMethod.POST,
-                addDeliveryHttpEntity(prefillSupport),
+                addSupportHttpEntity(prefillSupport),
                 Support.class
         );
         Support updateSupport = result.getBody();
         assertNotNull(updateSupport);
-        assertEquals("Recipient", updateSupport.getRecipient());
-        assertEquals("Sender", updateSupport.getSender());
-        assertEquals("Product", updateSupport.getProduct());
-        assertEquals("Address", updateSupport.getAddress());
-        assertEquals("DateRegistration", updateSupport.getDateRegistration());
-        assertEquals("DateSend", updateSupport.getDateSend());
-        assertEquals("DateReceive", updateSupport.getDateReceive());
+        assertEquals("Question", updateSupport.getQuestion());
+        assertEquals("Response", updateSupport.getResponse());
+        assertEquals(true, updateSupport.getClose());
 
-        Support receivedSupport = getDeliveryById(updateSupport.getId()).getBody();
+        Support receivedSupport = getSupportById(updateSupport.getId()).getBody();
         assertNotNull(receivedSupport);
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(updateSupport.getRecipient(), receivedSupport.getRecipient());
-        assertEquals(updateSupport.getSender(), receivedSupport.getSender());
+        assertEquals(updateSupport.getQuestion(), receivedSupport.getQuestion());
+        assertEquals(updateSupport.getResponse(), receivedSupport.getResponse());
     }
 
     @Test
-    public void deleteDelivery() {
-        Support newSupport = createDelivery();
+    public void deleteSupport() {
+        Support newSupport = createSupport();
         Support result = new RestTemplate().exchange(
                 ROOT + DELETE + PARAM_ID + newSupport.getId(),
                 HttpMethod.DELETE,
@@ -96,15 +92,15 @@ public class SupportControllerIntegrationTest {
                 Support.class).getBody();
         assertNotNull(result);
         assertEquals(newSupport.getId(), result.getId());
-        assertEquals(null, getDeliveryById(newSupport.getId()).getBody());
-        assertEquals(null, getDeliveryById(result.getId()).getBody());
+        assertEquals(null, getSupportById(newSupport.getId()).getBody());
+        assertEquals(null, getSupportById(result.getId()).getBody());
     }
 
 
     @Test
-    public void getDeliveriesByRecipient() {
-        Support newSupport = createDelivery();
-        createDelivery();
+    public void getSupportByCountRequests() {
+        Support newSupport = createSupport();
+        createSupport();
 
         ResponseEntity<List<Support>> result = new RestTemplate().exchange(
                 ROOT + GET_RECIPIENT + RECIPIENT,
@@ -112,32 +108,29 @@ public class SupportControllerIntegrationTest {
                 null,
                 new ParameterizedTypeReference<List<Support>>() {
                 },
-                newSupport.getRecipient());
+                newSupport.getCountRequests());
         assertNotNull(result.getBody());
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
-    private Support createDelivery() {
-        Support support = prefillDelivery();
+    private Support createSupport() {
+        Support support = prefillSupport();
 
         Support createSupport = new RestTemplate().exchange(
                 ROOT + ADD,
                 HttpMethod.PUT,
-                addDeliveryHttpEntity(support),
+                addSupportHttpEntity(support),
                 Support.class
         ).getBody();
+
         assertNotNull(createSupport);
-        assertEquals("Recipient", createSupport.getRecipient());
-        assertEquals("Sender", createSupport.getSender());
-        assertEquals("Product", createSupport.getProduct());
-        assertEquals("Address", createSupport.getAddress());
-        assertEquals("DateRegistration", createSupport.getDateRegistration());
-        assertEquals("DateSend", createSupport.getDateSend());
-        assertEquals("DateReceive", createSupport.getDateReceive());
+        assertEquals("Question", createSupport.getQuestion());
+        assertEquals("Response", createSupport.getResponse());
+        assertEquals(true, createSupport.getClose());
         return createSupport;
     }
 
-    private ResponseEntity<Support> getDeliveryById(Long id) {
+    private ResponseEntity<Support> getSupportById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(
                 ROOT + GET_BY_ID + ID,
@@ -147,21 +140,18 @@ public class SupportControllerIntegrationTest {
                 id);
     }
 
-    private HttpEntity<Support> addDeliveryHttpEntity(Support support) {
+    private HttpEntity<Support> addSupportHttpEntity(Support support) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
         return new HttpEntity<>(support, httpHeaders);
     }
 
-    private Support prefillDelivery() {
+    private Support prefillSupport() {
         Support support = new Support();
-        support.setRecipient("Recipient");
-        support.setSender("Sender");
-        support.setProduct("Product");
-        support.setAddress("Address");
-        support.setDateRegistration("DateRegistration");
-        support.setDateSend("DateSend");
-        support.setDateReceive("DateReceive");
+        support.setQuestion("Question");
+        support.setResponse("Response");
+        support.setClose(true);
+        support.setCountRequests(1L);
         return support;
     }
 }

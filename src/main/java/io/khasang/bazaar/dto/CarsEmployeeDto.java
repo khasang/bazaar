@@ -12,15 +12,32 @@ public class CarsEmployeeDto {
     private Long id;
     private Integer year;
     private String model;
-    private Set<EmployeeEntity> set = new HashSet<>();
+    private Set<EmployeeDTO> employeeEntities = new HashSet<>();
 
     public CarsEmployeeDto getCarsEmployeeDto(CarsEntity carsEntity) {
         CarsEmployeeDto carsEmployeeDto = new CarsEmployeeDto();
         carsEmployeeDto.setId(carsEntity.getId());
         carsEmployeeDto.setYear(carsEntity.getYear());
         carsEmployeeDto.setModel(carsEntity.getModel());
-        carsEmployeeDto.setSet(carsEntity.getEmployeeSet());
+
+        for (EmployeeEntity employeeEntity : carsEntity.getEmployeeSet()) {
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+            employeeDTO.setFirstName(employeeEntity.getFirstName());
+            employeeDTO.setLastName(employeeEntity.getLastName());
+            employeeEntities.add(employeeDTO);
+        }
+
+        carsEmployeeDto.setEmployeeEntities(employeeEntities);
+
         return carsEmployeeDto;
+    }
+
+    public Set<EmployeeDTO> getEmployeeEntities() {
+        return employeeEntities;
+    }
+
+    public void setEmployeeEntities(Set<EmployeeDTO> employeeEntities) {
+        this.employeeEntities = employeeEntities;
     }
 
     public Long getId() {
@@ -47,11 +64,4 @@ public class CarsEmployeeDto {
         this.model = model;
     }
 
-    public Set<EmployeeEntity> getSet() {
-        return set;
-    }
-
-    public void setSet(Set<EmployeeEntity> set) {
-        this.set = set;
-    }
 }

@@ -1,7 +1,5 @@
 package io.khasang.bazaar.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +11,8 @@ public class CarsEntity {
     private Long id;
     private Integer year;
     private String model;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<EmployeeEntity> employeeSet = new HashSet<>();
 
     public CarsEntity() {
     }
@@ -21,10 +21,6 @@ public class CarsEntity {
         this.year = year;
         this.model = model;
     }
-
-//    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<EmployeeEntity> employeeSet = new HashSet<>();
 
     public void addEmployees(EmployeeEntity employeeEntity) {
         employeeSet.add(employeeEntity);

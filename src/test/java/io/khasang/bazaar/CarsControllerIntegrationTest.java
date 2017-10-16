@@ -2,18 +2,13 @@ package io.khasang.bazaar;
 
 import io.khasang.bazaar.dto.CarsEmployeeDto;
 import io.khasang.bazaar.entity.CarsEntity;
-import io.khasang.bazaar.entity.Cat;
-import io.khasang.bazaar.entity.CatWoman;
 import io.khasang.bazaar.entity.EmployeeEntity;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

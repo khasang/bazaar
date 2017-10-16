@@ -1,58 +1,33 @@
 package io.khasang.bazaar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "cars", schema = "", catalog = "relationship")
 public class CarsEntity {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Integer year;
     private String model;
 
-    private Set<EmployeeEntity> employeeSet = new HashSet<>();
-    @ManyToMany
-    @JoinTable(name = "employee_car",
-            joinColumns = @JoinColumn(name = "car_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id"))
-    public Set<EmployeeEntity> getEmployeeSet() {
-        return employeeSet;
+    public CarsEntity() {
     }
 
-    public void setEmployeeSet(Set<EmployeeEntity> employeeSet) {
-        this.employeeSet = employeeSet;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "year", nullable = true, insertable = true, updatable = true)
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
+    public CarsEntity(Integer year, String model) {
         this.year = year;
-    }
-
-    @Basic
-    @Column(name = "model", nullable = true, insertable = true, updatable = true, length = 50)
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
         this.model = model;
+    }
+
+//    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<EmployeeEntity> employeeSet = new HashSet<>();
+
+    public void addEmployees(EmployeeEntity employeeEntity) {
+        employeeSet.add(employeeEntity);
     }
 
     @Override
@@ -62,18 +37,46 @@ public class CarsEntity {
 
         CarsEntity that = (CarsEntity) o;
 
-        if (id != that.id) return false;
         if (year != null ? !year.equals(that.year) : that.year != null) return false;
-        if (model != null ? !model.equals(that.model) : that.model != null) return false;
-
-        return true;
+        return model != null ? model.equals(that.model) : that.model == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (year != null ? year.hashCode() : 0);
+        int result = year != null ? year.hashCode() : 0;
         result = 31 * result + (model != null ? model.hashCode() : 0);
         return result;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Set<EmployeeEntity> getEmployeeSet() {
+        return employeeSet;
+    }
+
+    public void setEmployeeSet(Set<EmployeeEntity> employeeSet) {
+        this.employeeSet = employeeSet;
     }
 }

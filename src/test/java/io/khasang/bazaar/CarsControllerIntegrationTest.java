@@ -1,5 +1,6 @@
 package io.khasang.bazaar;
 
+import io.khasang.bazaar.dto.CarsEmployeeDto;
 import io.khasang.bazaar.entity.CarsEntity;
 import io.khasang.bazaar.entity.Cat;
 import io.khasang.bazaar.entity.CatWoman;
@@ -28,14 +29,14 @@ public class CarsControllerIntegrationTest {
         CarsEntity carsEntity = createCars();
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<CarsEntity> responseEntity = restTemplate.exchange(
+        ResponseEntity<CarsEmployeeDto> responseEntity = restTemplate.exchange(
                 ROOT + GET_BY_ID + "/{id}",
                 HttpMethod.GET,
                 null,
-                CarsEntity.class,
+                CarsEmployeeDto.class,
                 carsEntity.getId()
         );
-        CarsEntity receivedCat = responseEntity.getBody();
+        CarsEmployeeDto receivedCat = responseEntity.getBody();
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
 
     }
@@ -89,10 +90,8 @@ public class CarsControllerIntegrationTest {
         employeeEntity2.setFirstName("murs");
         employeeEntity2.setLastName("asasdad");
 
-        Set<EmployeeEntity> set = new HashSet<>();
-        set.add(employeeEntity1);
-        set.add(employeeEntity2);
-        carsEntity.setEmployeeSet(set);
+        carsEntity.addEmployees(employeeEntity1);
+        carsEntity.addEmployees(employeeEntity2);
 
         return carsEntity;
     }

@@ -2,7 +2,6 @@ package io.khasang.bazaar.service.impl;
 
 import io.khasang.bazaar.dao.CarsDao;
 import io.khasang.bazaar.entity.CarsEntity;
-import io.khasang.bazaar.service.CarsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

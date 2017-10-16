@@ -13,7 +13,8 @@ public class SupportDaoImpl extends BasicDaoImpl<Support> implements SupportDao 
 
     @Override
     public List<Support> getSupportByCountRequests(String countRequests) {
+        Long question = Long.parseLong(countRequests);
         return (List<Support>) sessionFactory.getCurrentSession().
-                createQuery("from Support as s where s.countRequests = ?").setParameter(0, countRequests).list();
+                createQuery("from Support as s where s.countRequests = ?").setParameter(0, question).list();
     }
 }

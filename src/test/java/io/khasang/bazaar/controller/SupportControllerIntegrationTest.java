@@ -24,8 +24,8 @@ public class SupportControllerIntegrationTest {
     private final String GET_ALL = "/all";
     private final String UPDATE = "/update";
     private final String DELETE = "/delete";
-    private final String GET_RECIPIENT = "/get/count_requests";
-    private final String RECIPIENT = "/{requests}";
+    private final String GET_COUNT_REQUESTS = "/get/count_requests";
+    private final String REQUESTS = "/{requests}";
 
     @Test
     public void addSupport() {
@@ -103,12 +103,12 @@ public class SupportControllerIntegrationTest {
         createSupport();
 
         ResponseEntity<List<Support>> result = new RestTemplate().exchange(
-                ROOT + GET_RECIPIENT + RECIPIENT,
+                ROOT + GET_COUNT_REQUESTS + REQUESTS,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Support>>() {
                 },
-                newSupport.getCountRequests());
+                newSupport.getCountRequests().toString());
         assertNotNull(result.getBody());
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
@@ -151,7 +151,7 @@ public class SupportControllerIntegrationTest {
         support.setQuestion("Question");
         support.setResponse("Response");
         support.setClose(true);
-        support.setCountRequests(1L);
+        support.setCountRequests(2L);
         return support;
     }
 }

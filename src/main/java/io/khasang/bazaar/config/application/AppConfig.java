@@ -1,12 +1,22 @@
 package io.khasang.bazaar.config.application;
 
+import io.khasang.bazaar.dao.CarsDao;
 import io.khasang.bazaar.dao.CatDao;
+import io.khasang.bazaar.dao.NewsDao;
+import io.khasang.bazaar.dao.NewsTagDao;
 import io.khasang.bazaar.dao.GoodsCategoryDao;
 import io.khasang.bazaar.dao.GoodsDao;
+import io.khasang.bazaar.dao.impl.CarsDaoImpl;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
+import io.khasang.bazaar.dao.impl.NewsDaoImpl;
+import io.khasang.bazaar.dao.impl.NewsTagDaoImpl;
 import io.khasang.bazaar.dao.impl.GoodsCategoryDaoImpl;
 import io.khasang.bazaar.dao.impl.GoodsDaoImpl;
+import io.khasang.bazaar.entity.CarsEntity;
 import io.khasang.bazaar.entity.Cat;
+import io.khasang.bazaar.entity.News;
+import io.khasang.bazaar.entity.NewsTag;
+import io.khasang.bazaar.model.*;
 import io.khasang.bazaar.entity.Goods;
 import io.khasang.bazaar.entity.GoodsCategory;
 import io.khasang.bazaar.model.CreateTable;
@@ -62,6 +72,22 @@ public class AppConfig {
     public CatDao catDao(){
         return new CatDaoImpl(Cat.class);
     }
+
+    @Bean
+    public CarsDao carsDao(){
+        return new CarsDaoImpl(CarsEntity.class);
+    }
+
+    @Bean
+    public NewsDao newsDao() {
+        return new NewsDaoImpl(News.class);
+    }
+
+    @Bean
+    public NewsTagDao newsTagDao() {
+        return new NewsTagDaoImpl(NewsTag.class);
+    }
+
 
     @Bean
     public GoodsCategoryDao goodsCategoryDao() {

@@ -20,12 +20,15 @@ public class Goods {
     @Column(nullable = false)
     private String name;
 
+    private String description;
+    private Integer price;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private GoodsCategory category;
 
-    private String description;
-    private Integer price;
+    @Column(name = "seller_login")
+    private String sellerLogin;
 
     @Column(name = "quantity_in_stock")
     private Integer quantityInStock;
@@ -34,6 +37,70 @@ public class Goods {
     private Integer quantityReserved;
 
     public Goods() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public GoodsCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(GoodsCategory category) {
+        this.category = category;
+    }
+
+    public String getSellerLogin() {
+        return sellerLogin;
+    }
+
+    public void setSellerLogin(String sellerLogin) {
+        this.sellerLogin = sellerLogin;
+    }
+
+    public Integer getQuantityInStock() {
+        return quantityInStock;
+    }
+
+    public void setQuantityInStock(Integer quantityInStock) {
+        this.quantityInStock = quantityInStock;
+    }
+
+    public Integer getQuantityReserved() {
+        return quantityReserved;
+    }
+
+    public void setQuantityReserved(Integer quantityReserved) {
+        this.quantityReserved = quantityReserved;
     }
 
     @Override
@@ -61,61 +128,5 @@ public class Goods {
         result = 31 * result + (quantityInStock != null ? quantityInStock.hashCode() : 0);
         result = 31 * result + (quantityReserved != null ? quantityReserved.hashCode() : 0);
         return result;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public GoodsCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(GoodsCategory category) {
-        this.category = category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getQuantityInStock() {
-        return quantityInStock;
-    }
-
-    public void setQuantityInStock(Integer quantityInStock) {
-        this.quantityInStock = quantityInStock;
-    }
-
-    public Integer getQuantityReserved() {
-        return quantityReserved;
-    }
-
-    public void setQuantityReserved(Integer quantityReserved) {
-        this.quantityReserved = quantityReserved;
     }
 }

@@ -4,6 +4,7 @@ import io.khasang.bazaar.dao.GoodsDao;
 import io.khasang.bazaar.entity.Goods;
 import io.khasang.bazaar.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Goods addGoods(Goods goods) {
+        goods.setSellerLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         return goodsDao.add(goods);
     }
 

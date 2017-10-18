@@ -5,7 +5,8 @@ import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 
-/** This class describes a database entity that represents goods for sale.
+/**
+ * This class describes a database entity that represents goods for sale.
  *
  * @author Zulfia Garifullina
  * @date 03.10.2017.
@@ -38,33 +39,6 @@ public class Goods {
     private Integer quantityReserved;
 
     public Goods() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Goods goods = (Goods) o;
-
-        if (id != null ? !id.equals(goods.id) : goods.id != null) return false;
-        if (name != null ? !name.equals(goods.name) : goods.name != null) return false;
-        if (category != null ? !category.equals(goods.category) : goods.category != null) return false;
-        if (price != null ? !price.equals(goods.price) : goods.price != null) return false;
-        if (quantityInStock != null ? !quantityInStock.equals(goods.quantityInStock) : goods.quantityInStock != null)
-            return false;
-        return quantityReserved != null ? quantityReserved.equals(goods.quantityReserved) : goods.quantityReserved == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (quantityInStock != null ? quantityInStock.hashCode() : 0);
-        result = 31 * result + (quantityReserved != null ? quantityReserved.hashCode() : 0);
-        return result;
     }
 
     public Long getId() {
@@ -111,7 +85,6 @@ public class Goods {
         return sellerLogin;
     }
 
-    @JsonIgnore
     public void setSellerLogin(String sellerLogin) {
         this.sellerLogin = sellerLogin;
     }
@@ -130,5 +103,32 @@ public class Goods {
 
     public void setQuantityReserved(Integer quantityReserved) {
         this.quantityReserved = quantityReserved;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Goods goods = (Goods) o;
+
+        if (id != null ? !id.equals(goods.id) : goods.id != null) return false;
+        if (name != null ? !name.equals(goods.name) : goods.name != null) return false;
+        if (category != null ? !category.equals(goods.category) : goods.category != null) return false;
+        if (price != null ? !price.equals(goods.price) : goods.price != null) return false;
+        if (quantityInStock != null ? !quantityInStock.equals(goods.quantityInStock) : goods.quantityInStock != null)
+            return false;
+        return quantityReserved != null ? quantityReserved.equals(goods.quantityReserved) : goods.quantityReserved == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (quantityInStock != null ? quantityInStock.hashCode() : 0);
+        result = 31 * result + (quantityReserved != null ? quantityReserved.hashCode() : 0);
+        return result;
     }
 }

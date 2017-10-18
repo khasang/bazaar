@@ -256,7 +256,7 @@ public class GoodsControllerIntegrationTest {
         category.setName("Sports goods");
         category.setDescription("All you need to keep active");
         goods.setCategory(category);
-        goods.setSellerLogin("admin");
+        goods.setSellerLogin("user");
         goods.setPrice(5000);
         goods.setQuantityInStock(600);
         goods.setQuantityReserved(200);
@@ -315,7 +315,7 @@ public class GoodsControllerIntegrationTest {
         assertNotNull(reservedGoods);
         assertEquals("Skis", reservedGoods.getName());
         assertEquals("Mountain skis", reservedGoods.getDescription());
-        assertEquals("admin", reservedGoods.getSellerLogin());
+        assertEquals("user", reservedGoods.getSellerLogin());
         assertEquals(new Integer(5000), reservedGoods.getPrice());
         assertEquals(new Integer(590), reservedGoods.getQuantityInStock());
         assertEquals(new Integer(210), reservedGoods.getQuantityReserved());
@@ -345,7 +345,7 @@ public class GoodsControllerIntegrationTest {
         assertNotNull(unreservedGoods);
         assertEquals("Skis", unreservedGoods.getName());
         assertEquals("Mountain skis", unreservedGoods.getDescription());
-        assertEquals("admin", unreservedGoods.getSellerLogin());
+        assertEquals("user", unreservedGoods.getSellerLogin());
         assertEquals(new Integer(5000), unreservedGoods.getPrice());
         assertEquals(new Integer(600), unreservedGoods.getQuantityInStock());
         assertEquals(new Integer(200), unreservedGoods.getQuantityReserved());
@@ -376,7 +376,7 @@ public class GoodsControllerIntegrationTest {
         assertNotNull(boughtGoods);
         assertEquals("Skis", boughtGoods.getName());
         assertEquals("Mountain skis", boughtGoods.getDescription());
-        assertEquals("admin", boughtGoods.getSellerLogin());
+        assertEquals("user", boughtGoods.getSellerLogin());
         assertEquals(new Integer(5000), boughtGoods.getPrice());
         assertEquals(new Integer(590), boughtGoods.getQuantityInStock());
         assertEquals(new Integer(200), boughtGoods.getQuantityReserved());

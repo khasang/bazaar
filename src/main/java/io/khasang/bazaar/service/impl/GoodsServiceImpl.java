@@ -5,7 +5,6 @@ import io.khasang.bazaar.entity.Goods;
 import io.khasang.bazaar.service.GoodsService;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +35,8 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Goods addGoods(Goods goods) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        goods.setSellerLogin(auth.getName());
+        goods.setSellerLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        //getPrincipal().toString()
         return goodsDao.add(goods);
     }
 

@@ -37,7 +37,6 @@ public class FeedbackControllerIntegrationTest {
         assertNotNull(result.getBody());
     }
 
-
     private Feedback createfeedback() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -52,6 +51,7 @@ public class FeedbackControllerIntegrationTest {
         assertNotNull(createdFeedback);
         assertEquals((Long)1L,createdFeedback.getUser_id());
         assertEquals((Long)1L,createdFeedback.getGood_id());
+        assertEquals(java.util.Optional.of(5),createdFeedback.getFeedbackRating());
         assertNotNull(createdFeedback.getId());
         return createdFeedback;
     }
@@ -61,6 +61,7 @@ public class FeedbackControllerIntegrationTest {
         feedback.setMessage("It's a test message by user 1 about good 1");
         feedback.setUser_id(1L);
         feedback.setGood_id(1L);
+        feedback.setFeedbackRating((short)5);
         return feedback;
     }
 }

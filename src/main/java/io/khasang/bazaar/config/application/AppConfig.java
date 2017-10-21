@@ -61,7 +61,7 @@ public class AppConfig {
     }
 
     @Bean
-    public SupportDao deliveryDao(){
+    public SupportDao supportDao(){
         return new SupportDaoImpl(Support.class);
     }
 }

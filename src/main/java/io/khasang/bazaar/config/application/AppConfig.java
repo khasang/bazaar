@@ -1,12 +1,15 @@
 package io.khasang.bazaar.config.application;
 
 import io.khasang.bazaar.dao.CatDao;
-import io.khasang.bazaar.dao.FeedbackDao;
+import io.khasang.bazaar.dao.GoodsCategoryDao;
+import io.khasang.bazaar.dao.GoodsDao;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
-import io.khasang.bazaar.dao.impl.FeedbackDaoImpl;
+import io.khasang.bazaar.dao.impl.GoodsCategoryDaoImpl;
+import io.khasang.bazaar.dao.impl.GoodsDaoImpl;
 import io.khasang.bazaar.entity.Cat;
-import io.khasang.bazaar.entity.Feedback;
-import io.khasang.bazaar.model.CreateTable;
+import io.khasang.bazaar.entity.Goods;
+import io.khasang.bazaar.entity.GoodsCategory;
+import io.khasang.bazaar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +28,7 @@ public class AppConfig {
     private Environment environment;
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcDao = new JdbcDaoImpl();
         jdbcDao.setDataSource(dataSource());
         jdbcDao.setUsersByUsernameQuery(environment.getRequiredProperty("usersByQuery"));
@@ -56,12 +59,52 @@ public class AppConfig {
     }
 
     @Bean
-    public CatDao catDao(){
+    public PopulateTable populateTable(){
+        return new PopulateTable(jdbcTemplate());
+    }
+
+    @Bean
+    public SelectFromTable selectFromTable(){
+        return new SelectFromTable(jdbcTemplate());
+    }
+
+    @Bean
+    public UpdateTable updateTable(){
+        return new UpdateTable(jdbcTemplate());
+    }
+
+    @Bean
+    public DeleteFromTable deleteFromTable(){
+        return new DeleteFromTable(jdbcTemplate());
+    }
+
+    @Bean
+    public JoinTable joinTable(){
+        return new JoinTable(jdbcTemplate());
+    }
+
+    @Bean
+    public SubqueryTable subqueryTable(){
+        return new SubqueryTable(jdbcTemplate());
+    }
+
+    @Bean
+    public CaseWhenTable caseWhenTable(){
+        return new CaseWhenTable(jdbcTemplate());
+    }
+
+    @Bean
+    public CatDao catDao() {
         return new CatDaoImpl(Cat.class);
     }
 
     @Bean
-    public FeedbackDao feedbackDao() {
-        return new FeedbackDaoImpl(Feedback.class);
+    public GoodsCategoryDao goodsCategoryDao() {
+        return new GoodsCategoryDaoImpl(GoodsCategory.class);
+    }
+
+    @Bean
+    public GoodsDao goodsDao() {
+        return new GoodsDaoImpl(Goods.class);
     }
 }

@@ -17,7 +17,7 @@
         <jackson.version>2.7.8</jackson.version>
         <javax.version>3.0.1</javax.version>
         <postgresql.version>9.4.1212.jre7</postgresql.version>
-        <hibernate.version>5.2.10.Final</hibernate.version>
+        <hibernate.version>5.2.11.Final</hibernate.version>
         <junit.version>4.12</junit.version>
     </properties>
 
@@ -53,7 +53,7 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!--Postgresql-->
+        <!--PostgreSQL-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

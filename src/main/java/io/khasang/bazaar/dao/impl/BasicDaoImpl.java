@@ -13,9 +13,10 @@ import java.util.List;
 
 @Transactional
 public class BasicDaoImpl<T> implements BasicDao<T> {
-    private final Class<T> entityClass;
     @Autowired
     protected SessionFactory sessionFactory;
+
+    private final Class<T> entityClass;
 
     public BasicDaoImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -24,6 +25,11 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     @Override
     public Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
+    }
+
+    @Override
+    public T getById(Long id) {
+        return getCurrentSession().get(entityClass, id);
     }
 
     @Override
@@ -39,23 +45,18 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     }
 
     @Override
-    public List<T> getList() {
-        CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
-        Root<T> root = criteriaQuery.from(entityClass);
-
-        criteriaQuery.select(root);
-        return sessionFactory.getCurrentSession().createQuery(criteriaQuery).list();
-    }
-
-    @Override
     public T delete(T entity) {
         sessionFactory.getCurrentSession().delete(entity);
         return entity;
     }
 
     @Override
-    public T getById(Long id) {
-        return getCurrentSession().get(entityClass, id);
+    // Select * from cats
+    public List<T> getList() {
+        CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root);
+        return sessionFactory.getCurrentSession().createQuery(criteriaQuery).list();
     }
 }

@@ -14,7 +14,7 @@ public class CatController {
     private final CatService catService;
 
     @Autowired
-    public CatController(CatService catService) {
+    public CatController (CatService catService) {
         this.catService = catService;
     }
 
@@ -30,27 +30,9 @@ public class CatController {
         return catService.addCat(cat);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public Cat updateCat(@RequestBody Cat cat) {
-        return catService.updateCat(cat);
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    @ResponseBody
-    public Cat deleteCat(@RequestParam(value = "id") String id){
-        return catService.deleteCat(Long.parseLong(id));
-    }
-
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public List<Cat> getCats(){
+    public List<Cat> getCats() {
         return catService.getList();
-    }
-
-    @RequestMapping(value = "/get/name/{name}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Cat> getCatsByName(@PathVariable(value = "name") String name){
-        return catService.getCatsByName(name);
     }
 }

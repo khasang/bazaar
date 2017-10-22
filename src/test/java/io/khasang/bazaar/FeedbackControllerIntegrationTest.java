@@ -1,6 +1,7 @@
 package io.khasang.bazaar;
 
 import io.khasang.bazaar.entity.Feedback;
+import io.khasang.bazaar.entity.Goods;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -53,6 +54,10 @@ public class FeedbackControllerIntegrationTest {
         //assertEquals(java.util.Optional.of(5),createdFeedback.getFeedbackRating());
         assertNotNull(createdFeedback.getId());
         return createdFeedback;
+    }
+
+    private Goods prefillGoods() {
+
     }
 
     private Feedback prefillFeedback() {

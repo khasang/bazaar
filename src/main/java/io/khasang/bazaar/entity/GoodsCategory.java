@@ -2,7 +2,9 @@ package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
 
-/** This class describes a database entity that represents categories of goods
+/**
+ * This class describes a database entity that represents categories of goods
+ *
  * @author Zulfia Garifullina
  * @date 26.09.2017.
  */

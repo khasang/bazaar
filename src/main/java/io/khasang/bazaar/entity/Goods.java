@@ -1,10 +1,9 @@
 package io.khasang.bazaar.entity;
 
-import org.springframework.stereotype.Controller;
-
 import javax.persistence.*;
 
-/** This class describes a database entity that represents goods for sale.
+/**
+ * This class describes a database entity that represents goods for sale.
  *
  * @author Zulfia Garifullina
  * @date 03.10.2017.

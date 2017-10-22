@@ -17,13 +17,13 @@ public class FeedbackDaoImpl extends BasicDaoImpl<Feedback> implements FeedbackD
 
     @Override
     public List<Feedback> getFeedbacksByUser(Long user_id) {
-        List<Feedback> results = getQuery("user_id",user_id).getResultList();
+        List<Feedback> results = getFeedbackSelectQuery("user_id", user_id).getResultList();
         return results;
     }
 
     @Override
     public List<Feedback> getFeedbacksByGood(Long good_id) {
-        List<Feedback> results = getQuery("good_id",good_id).getResultList();
+        List<Feedback> results = getFeedbackSelectQuery("good_id", good_id).getResultList();
         return results;
     }
 
@@ -40,7 +40,7 @@ public class FeedbackDaoImpl extends BasicDaoImpl<Feedback> implements FeedbackD
         return result;
     }
 
-    private Query getQuery (String idName, Long idVal){
+    private Query getFeedbackSelectQuery(String idName, Long idVal) {
         CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
         CriteriaQuery<Feedback> criteriaQuery = builder.createQuery(Feedback.class);
         Root<Feedback> root = criteriaQuery.from(Feedback.class);

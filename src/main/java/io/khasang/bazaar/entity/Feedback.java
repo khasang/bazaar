@@ -2,6 +2,11 @@ package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
 
+/**
+ * This class describes a database entity that represents feedback made by users about goods they buy.
+ *
+ * @author Artem Kovalev
+ */
 @Entity
 @Table(name = "feedback")
 public class Feedback {
@@ -14,8 +19,9 @@ public class Feedback {
     @Column(name="user_id")
     private Long user_id;
 
-    @Column(name="good_id")
-    private Long good_id;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "goods_id")
+    private Goods good;
 
     @Column(name="rating")
     private Short feedbackRating;
@@ -33,7 +39,7 @@ public class Feedback {
         if (!id.equals(feedback.id)) return false;
         if (message != null ? !message.equals(feedback.message) : feedback.message != null) return false;
         if (user_id != null ? !user_id.equals(feedback.user_id) : feedback.user_id != null) return false;
-        if (good_id != null ? !good_id.equals(feedback.good_id) : feedback.good_id != null) return false;
+        if (good != null ? !good.equals(feedback.good) : feedback.good != null) return false;
         return feedbackRating != null ? feedbackRating.equals(feedback.feedbackRating) : feedback.feedbackRating == null;
     }
 
@@ -42,7 +48,7 @@ public class Feedback {
         int result = id.hashCode();
         result = 31 * result + (message != null ? message.hashCode() : 0);
         result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
-        result = 31 * result + (good_id != null ? good_id.hashCode() : 0);
+        result = 31 * result + (good != null ? good.hashCode() : 0);
         result = 31 * result + (feedbackRating != null ? feedbackRating.hashCode() : 0);
         return result;
     }
@@ -71,12 +77,12 @@ public class Feedback {
         this.user_id = user_id;
     }
 
-    public Long getGood_id() {
-        return good_id;
+    public Goods getGood() {
+        return good;
     }
 
-    public void setGood_id(Long good_id) {
-        this.good_id = good_id;
+    public void setGoods(Goods good) {
+        this.good = good;
     }
 
     public Short getFeedbackRating() {

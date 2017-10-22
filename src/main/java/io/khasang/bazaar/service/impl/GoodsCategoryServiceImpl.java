@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Implementation of the service interface for Goods Category entity.
+ *
  * @author Zulfia Garifullina
  * @date 26.09.2017.
  */

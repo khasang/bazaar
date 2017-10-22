@@ -11,7 +11,7 @@ import java.util.List;
 @Service("feedbackService")
 public class FeedbackServiceImpl implements FeedbackService {
     @Autowired
-    private FeedbackDao feedbackDao;
+    public FeedbackDao feedbackDao;
 
     @Override
     public Feedback getById(Long id) {

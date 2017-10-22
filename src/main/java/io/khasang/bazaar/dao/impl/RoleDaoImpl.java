@@ -5,27 +5,32 @@ import io.khasang.bazaar.entity.Role;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link RoleDao} interface
+ *
+ * @author Denis Tyurin
+ * @version 1.0
+ */
 public class RoleDaoImpl extends BasicDaoImpl<Role> implements RoleDao {
     public RoleDaoImpl(Class<Role> entityClass) {
         super(entityClass);
     }
 
-    public List<Role> getRolesByName(String roleName) {
-        //TODO: Warning unchecked cast List to List<Role> because createQuery(...) return has raw type, so result of list is erased
-        return (List<Role>) sessionFactory.getCurrentSession().
-                createQuery("from Role as r where r.roleName = ?").setParameter(0, roleName).list();
+    public Role getRoleByName(String roleName) {
+        return (Role) sessionFactory.getCurrentSession().
+                createQuery("from Role as r where r.roleName = ?").setParameter(0, roleName);
     }
 
-    public List<Role> getRolesByRoleId(String roleId) {
-        //TODO: Warning unchecked cast List to List<Role> because createQuery(...) return has raw type, so result of list is erased
-        return (List<Role>) sessionFactory.getCurrentSession().
-                createQuery("from Role as r where r.roleID = ?").setParameter(0, Integer.parseInt(roleId)).list();
+    public Role getRoleByRoleId(String roleId) {
+        return (Role) sessionFactory.getCurrentSession().
+                createQuery("from Role as r where r.roleId = ?").setParameter(0, Integer.parseInt(roleId));
     }
 
-    public List<Role> getRolesByIsActive(Boolean isActive) {
-        //TODO: Warning unchecked cast List to List<Role> because createQuery(...) return has raw type, so result of list is erased
+    public List<Role> getRolesByIsActive(Integer isActive) {
+        //TODO: Warning unchecked cast List to List<Role> because createQuery(...) return has raw type, so result
+        // of list is erased
         return (List<Role>) sessionFactory.getCurrentSession().
-                createQuery("from Role as r where r.isactive = ?").setParameter(0, isActive.booleanValue()).list();
+                createQuery("from Role as r where r.isActive = ?").setParameter(0, isActive).list();
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface BasicDao<T> {
 
     /**
-     * get current session
+     * Get current Hibernate session
      *
      * @return session
      */
@@ -38,17 +38,17 @@ public interface BasicDao<T> {
     T update(T entity);
 
     /**
-     * Receive all entities from database
-     *
-     * @return all entities from database
-     */
-    List<T> getList();
-
-    /**
      * Delete entity from database
      *
      * @param entity - entity for deletion
      * @return entity
      */
     T delete(T entity);
+
+    /**
+     * Receive all entities from database
+     *
+     * @return all entities from database
+     */
+    List<T> getList();
 }

@@ -17,7 +17,6 @@ import java.util.*;
  * @author Eugene Suleimanov
  * @version 1.0
  */
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void save(User user) {
+    public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
         roles.add(roleDao.getById(1L));
@@ -40,7 +39,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userDao.findByUserName(username);
+    public User findUserByLogin(String login) {
+        return userDao.findUserByLogin(login);
+    }
+
+    @Override
+    public Set<User> findUsersByRole(String roleName) {
+        return userDao.findUsersByRole(roleName);
     }
 }

@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link RoleService} interface.
+ *
+ * @author Denis Tyurin
+ * @version 1.0
+ */
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
     @Autowired
@@ -17,7 +23,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getById(Long id) {
+    public Role getRoleById(Long id) {
         return roleDao.getById(id);
     }
 
@@ -32,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getRoleList() {
+    public List<Role> getAllRoles() {
         return roleDao.getList();
     }
 
@@ -41,17 +47,18 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.delete(roleDao.getById(id));
     }
 
-    public List<Role> getRolesByName(String roleName) {
-        return roleDao.getRolesByName(roleName);
+    @Override
+    public Role getRoleByName(String roleName) {
+        return roleDao.getRoleByName(roleName);
     }
 
     @Override
-    public List<Role> getRolesByRoleId(String roleId) {
-        return roleDao.getRolesByRoleId(roleId);
+    public Role getRoleByRoleId(String roleId) {
+        return roleDao.getRoleByRoleId(roleId);
     }
 
     @Override
-    public List<Role> getRolesByIsActive(Boolean isActive) {
+    public List<Role> getRolesByIsActive(Integer isActive) {
         return roleDao.getRolesByIsActive(isActive);
     }
 

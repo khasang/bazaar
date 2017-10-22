@@ -2,16 +2,19 @@ package io.khasang.bazaar.service;
 
 import io.khasang.bazaar.entity.User;
 
+import java.util.Set;
+
 /**
  * Service class for {@link User}
  *
- * @author Eugene Suleimanov
+ * @author Denis Tyurin
  * @version 1.0
  */
-
 public interface UserService {
 
-    void save(User user);
+    void saveUser(User user);
 
-    User findByUsername(String username);
+    User findUserByLogin(String login);
+
+    Set<User> findUsersByRole(String roleName);
 }

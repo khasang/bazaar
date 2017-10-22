@@ -1,10 +1,12 @@
 package io.khasang.bazaar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Simple JavaBean domain object that represents a User (заглушка)
+ * Simple JavaBean domain object that represents a User (dummy with two fields: login and password)
  *
  * @author Denis Tyurin
  * @version 1.0
@@ -17,19 +19,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
-    private String userName;
+    @Column(name = "login", unique = true)
+    private String login;
 
     @Column(name = "password")
     private String password;
 
     @Transient
-    private String confirmPassword;
+    transient private String confirmPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public User() {
+    }
 
     public Long getId() {
         return id;
@@ -39,12 +50,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLogin(String userName) {
+        this.login = userName;
     }
 
     public String getPassword() {
@@ -70,5 +81,6 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
 }
 

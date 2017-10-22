@@ -20,7 +20,7 @@ public class FeedbackController {
 
     @RequestMapping(value = "/get/id/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Feedback getCatById(@PathVariable(value = "id") String id) {
+    public Feedback getFeedbackById(@PathVariable(value = "id") String id) {
         return feedbackService.getById(Long.parseLong(id));
     }
 

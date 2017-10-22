@@ -34,8 +34,8 @@ public class CatControllerIntegrationTest {
         Cat receivedCat = responseEntity.getBody();
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(receivedCat);
-        assertNotNull(receivedCat.getCatWomanList());
-        assertEquals("Murka", receivedCat.getCatWomanList().get(1).getName());
+        //assertNotNull(receivedCat.getCatWomanList());
+        //assertEquals("Murka", receivedCat.getCatWomanList().get(1).getName());
         assertEquals(cat.getName(), receivedCat.getName());
 
     }
@@ -93,7 +93,7 @@ public class CatControllerIntegrationTest {
         List<CatWoman> list = new ArrayList<>();
         list.add(catWoman1);
         list.add(catWoman2);
-        cat.setCatWomanList(list);
+        //cat.setCatWomanList(list);
 
         return cat;
     }

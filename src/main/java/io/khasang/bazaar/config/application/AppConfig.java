@@ -1,30 +1,9 @@
 package io.khasang.bazaar.config.application;
 
-import io.khasang.bazaar.dao.CarsDao;
-import io.khasang.bazaar.dao.CatDao;
-import io.khasang.bazaar.dao.NewsDao;
-import io.khasang.bazaar.dao.NewsTagDao;
-import io.khasang.bazaar.dao.GoodsCategoryDao;
-import io.khasang.bazaar.dao.GoodsDao;
-import io.khasang.bazaar.dao.SellerDao;
-import io.khasang.bazaar.dao.impl.CarsDaoImpl;
-import io.khasang.bazaar.dao.DeliveryDao;
-import io.khasang.bazaar.dao.impl.CatDaoImpl;
-import io.khasang.bazaar.dao.impl.NewsDaoImpl;
-import io.khasang.bazaar.dao.impl.NewsTagDaoImpl;
-import io.khasang.bazaar.dao.impl.GoodsCategoryDaoImpl;
-import io.khasang.bazaar.dao.impl.GoodsDaoImpl;
-import io.khasang.bazaar.dao.impl.SellerDaoImpl;
-import io.khasang.bazaar.entity.CarsEntity;
-import io.khasang.bazaar.dao.impl.DeliveryDaoImpl;
-import io.khasang.bazaar.entity.Cat;
-import io.khasang.bazaar.entity.News;
-import io.khasang.bazaar.entity.NewsTag;
+import io.khasang.bazaar.dao.*;
+import io.khasang.bazaar.dao.impl.*;
+import io.khasang.bazaar.entity.*;
 import io.khasang.bazaar.model.*;
-import io.khasang.bazaar.entity.Goods;
-import io.khasang.bazaar.entity.GoodsCategory;
-import io.khasang.bazaar.entity.Seller;
-import io.khasang.bazaar.entity.Delivery;
 import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -87,6 +66,11 @@ public class AppConfig {
     @Bean
     public NewsDao newsDao() {
         return new NewsDaoImpl(News.class);
+    }
+
+    @Bean
+    public NewsCategoryDao newsCategoryDao() {
+        return new NewsCategoryDaoImpl(NewsCategory.class);
     }
 
     @Bean

@@ -1,8 +1,6 @@
 package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "news")
@@ -17,12 +15,18 @@ public class News {
     @Column(nullable = false)
     private String body;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private NewsCategory newsCategory;
 
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    private List<NewsTag> newsTagList = new ArrayList<>();
 
-    public News() {
-    }
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private Set<NewsTag> tagSet = new HashSet<>();
+//
+//    public Set<NewsTag> getNewsTagSet() {
+//        return tagSet;
+//    }
+
 
     public Long getId() {
         return id;
@@ -46,5 +50,12 @@ public class News {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public void setCategory(NewsCategory category) {
+        this.newsCategory = category;
+    }
+
+    public News() {
     }
 }

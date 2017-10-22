@@ -1,6 +1,7 @@
 package io.khasang.bazaar.service.impl;
 
 import io.khasang.bazaar.entity.News;
+import io.khasang.bazaar.entity.NewsTag;
 import io.khasang.bazaar.service.NewsService;
 import io.khasang.bazaar.dao.NewsDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,9 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Set;
 
-@Service("newsCategoryService")
+@Service("newsService")
 public class NewsServiceImpl implements NewsService {
     @Autowired
     private NewsDao newsDao;
@@ -26,11 +28,23 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<News> getList() {
-        return null;
+        return newsDao.getList();
     }
 
     @Override
     public News delete(Long id) {
-        return null;
+        News news = newsDao.getById(id);
+        return newsDao.delete(news);
     }
+
+    @Override
+    public List<News> getNewsByTitle(String title) {
+        return newsDao.getNewsByTitle(title);
+    }
+
+    //    @Override
+//    public Set<NewsTag> getNewsTagSet(Long id) {
+//        return null;
+//    }
+
 }

@@ -36,4 +36,10 @@ public class NewsTagController {
         return newsTagService.getList();
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public NewsTag delete(@RequestParam(value = "id") String id){
+        return newsTagService.delete(Long.parseLong(id));
+    }
+
 }

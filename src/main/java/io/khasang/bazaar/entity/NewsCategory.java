@@ -2,18 +2,23 @@ package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
 
+@Entity
 @Table(name = "news_categories")
 public class NewsCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "news_cat_id")
+    //@Column(name = "cat_id")
     private Long id;
 
-    @Column(nullable = false, name = "cat_name")
+    @Column(nullable = false, name = "name")
     private String name;
 
     public NewsCategory(String name) {
         this.name = name;
+    }
+
+    public NewsCategory() {
+
     }
 
     public String getName() {

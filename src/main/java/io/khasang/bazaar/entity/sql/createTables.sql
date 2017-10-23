@@ -25,8 +25,8 @@
 -- );
 
 INSERT INTO users VALUES (1, 'user1', '123456');
-INSERT INTO users VALUES (2, 'admin', 'qwerty');
-INSERT INTO users VALUES (3, 'user3', 'asdfgh');
+INSERT INTO users VALUES (2, 'seller1', 'qwerty');
+INSERT INTO users VALUES (3, 'admin', 'qwerty123456');
 
 INSERT INTO roles VALUES (1, -1, 1, 10, 'USER');
 INSERT INTO roles VALUES (2, -1, 1, 0, 'ADMIN');
@@ -47,5 +47,5 @@ INSERT INTO roles VALUES (5, -1, 1, 2, 'ARBITRATOR');
 -- );
 
 INSERT INTO user_roles VALUES (1, 1);
-INSERT INTO user_roles VALUES (2, 2);
-INSERT INTO user_roles VALUES (3, 4);
+INSERT INTO user_roles VALUES (2, 3);
+INSERT INTO user_roles VALUES (3, 2);

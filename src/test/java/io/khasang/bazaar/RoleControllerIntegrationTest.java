@@ -32,8 +32,7 @@ public class RoleControllerIntegrationTest {
                 HttpMethod.GET,
                 null,
                 Role.class,
-                1
-                //role.getId()
+                role.getId()
         );
         Role receivedRole = roleResponseEntity.getBody();
         assertEquals(HttpStatus.OK, roleResponseEntity.getStatusCode());

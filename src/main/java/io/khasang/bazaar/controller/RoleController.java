@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/roles")
@@ -66,9 +65,17 @@ public class RoleController {
         return roleService.getRoleByName(roleName);
     }
 
-    @RequestMapping(value = "/getusers/{rolename}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public Set<User> getUsersByRole(@PathVariable(value = "rolename") String roleName) {
-        return userService.findUsersByRole(roleName);
+    public Role updateRole(@RequestBody Role role) {
+        return roleService.updateRole(role);
     }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Role deleteRole(@RequestParam(value = "id") String id) {
+        return roleService.deleteRole(Long.parseLong(id));
+    }
+
+
 }

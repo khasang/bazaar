@@ -23,7 +23,6 @@ public class DiscountControllerIntegrationTest {
     private final String DELETE = "/delete";
     private final String GET_ACTUAL = "/get/actual";
 
-
     @Test
     public void addDiscount() {
         Discount discount = createDiscount();
@@ -148,8 +147,6 @@ public class DiscountControllerIntegrationTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertNotNull(result.getBody());
     }
-
-
 
     private Discount createDiscount() {
         HttpHeaders httpHeaders = new HttpHeaders();

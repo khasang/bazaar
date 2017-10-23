@@ -1,10 +1,35 @@
 package io.khasang.bazaar.config.application;
 
+import io.khasang.bazaar.dao.CarsDao;
 import io.khasang.bazaar.dao.CatDao;
+import io.khasang.bazaar.dao.NewsDao;
+import io.khasang.bazaar.dao.NewsTagDao;
+import io.khasang.bazaar.dao.GoodsCategoryDao;
+import io.khasang.bazaar.dao.GoodsDao;
+import io.khasang.bazaar.dao.SellerDao;
+import io.khasang.bazaar.dao.impl.CarsDaoImpl;
+import io.khasang.bazaar.dao.DeliveryDao;
+import io.khasang.bazaar.dao.UserDao;
 import io.khasang.bazaar.dao.DiscountDao;
 import io.khasang.bazaar.dao.impl.CatDaoImpl;
+import io.khasang.bazaar.dao.impl.NewsDaoImpl;
+import io.khasang.bazaar.dao.impl.NewsTagDaoImpl;
+import io.khasang.bazaar.dao.impl.GoodsCategoryDaoImpl;
+import io.khasang.bazaar.dao.impl.GoodsDaoImpl;
+import io.khasang.bazaar.dao.impl.SellerDaoImpl;
+import io.khasang.bazaar.entity.CarsEntity;
+import io.khasang.bazaar.dao.impl.DeliveryDaoImpl;
+import io.khasang.bazaar.dao.impl.UserDaoImpl;
 import io.khasang.bazaar.dao.impl.DiscountDaoImpl;
 import io.khasang.bazaar.entity.Cat;
+import io.khasang.bazaar.entity.News;
+import io.khasang.bazaar.entity.NewsTag;
+import io.khasang.bazaar.model.*;
+import io.khasang.bazaar.entity.Goods;
+import io.khasang.bazaar.entity.GoodsCategory;
+import io.khasang.bazaar.entity.Seller;
+import io.khasang.bazaar.entity.Delivery;
+import io.khasang.bazaar.entity.User;
 import io.khasang.bazaar.entity.Discount;
 import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +83,46 @@ public class AppConfig {
     @Bean
     public CatDao catDao(){
         return new CatDaoImpl(Cat.class);
+    }
+
+    @Bean
+    public UserDao userDao(){
+        return new UserDaoImpl(User.class);
+    }
+
+
+    @Bean
+    public CarsDao carsDao(){
+        return new CarsDaoImpl(CarsEntity.class);
+    }
+
+    @Bean
+    public NewsDao newsDao() {
+        return new NewsDaoImpl(News.class);
+    }
+
+    @Bean
+    public NewsTagDao newsTagDao() {
+        return new NewsTagDaoImpl(NewsTag.class);
+    }
+
+    @Bean
+    public GoodsCategoryDao goodsCategoryDao() {
+        return new GoodsCategoryDaoImpl(GoodsCategory.class);
+    }
+
+    @Bean
+    public GoodsDao goodsDao() {
+        return new GoodsDaoImpl(Goods.class);
+    }
+    @Bean
+    public SellerDao sellerDao() {
+        return new SellerDaoImpl(Seller.class);
+    }
+
+    @Bean
+    public DeliveryDao deliveryDao(){
+        return new DeliveryDaoImpl(Delivery.class);
     }
 
     @Bean

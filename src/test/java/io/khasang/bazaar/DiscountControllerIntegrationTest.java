@@ -163,7 +163,7 @@ public class DiscountControllerIntegrationTest {
                 Discount.class).getBody();
         assertNotNull(createdDiscount);
         assertEquals(20, createdDiscount.getRate().longValue());
-        assertEquals("darim_skidku", createdDiscount.getDescription());
+        assertEquals("we give you a discount", createdDiscount.getDescription());
         assertNotNull(createdDiscount.getId());
 
         return createdDiscount;
@@ -172,7 +172,7 @@ public class DiscountControllerIntegrationTest {
     private Discount prefillDiscount() {
         Discount discount = new Discount();
         discount.setRate(20);
-        discount.setDescription("darim_skidku");
+        discount.setDescription("we give you a discount");
         discount.setStartDate(java.sql.Date.valueOf(LocalDate.now().minusDays(5)));
         discount.setEndDate(java.sql.Date.valueOf(LocalDate.now().plusDays(5)));
         discount.setPromoCode("1");
@@ -181,7 +181,7 @@ public class DiscountControllerIntegrationTest {
 
     private Discount changeDiscount(Discount discount) {
         discount.setRate(15);
-        discount.setDescription("изменённая скидка");
+        discount.setDescription("modified discount");
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -195,7 +195,7 @@ public class DiscountControllerIntegrationTest {
                 Discount.class).getBody();
         assertNotNull(changedDiscount);
         assertEquals(15, changedDiscount.getRate().intValue());
-        assertEquals("изменённая скидка", changedDiscount.getDescription());
+        assertEquals("modified discount", changedDiscount.getDescription());
         assertNotNull(changedDiscount.getId());
 
         return changedDiscount;

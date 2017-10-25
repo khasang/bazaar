@@ -1,19 +1,22 @@
 package io.khasang.bazaar.controller;
 
+import io.khasang.bazaar.dto.NewsDTO;
 import io.khasang.bazaar.entity.News;
-import io.khasang.bazaar.entity.NewsTag;
 import io.khasang.bazaar.service.NewsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/news")
 public class NewsController {
     private final NewsService newsService;
+
+    @Autowired
+    private NewsDTO newsDTO;
 
     @Autowired
     public NewsController(NewsService newsService) {
@@ -22,9 +25,10 @@ public class NewsController {
 
     @RequestMapping(value = "/get/id/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public News getById(@PathVariable(value = "id") String id) {
-        return newsService.getById(Long.parseLong(id));
+    public NewsDTO getById(@PathVariable(value = "id") String id) {
+        return newsDTO.getNewsTagDTOSet(newsService.getById(Long.parseLong(id)));
     }
+
 
     @RequestMapping(value = "/get/title/{title}", method = RequestMethod.GET)
     @ResponseBody
@@ -32,11 +36,11 @@ public class NewsController {
         return newsService.getNewsByTitle(title);
     }
 
-//    @RequestMapping(value = "/{id}/tags", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Set<NewsTag> getNewsTagSet(@PathVariable(value = "id") String id) {
-//        return newsService.getNewsTagSet(Long.parseLong(id));
-//    }
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public News updateNews(@RequestBody News news) {
+        return newsService.updateNews(news);
+    }
 
     @RequestMapping(value = "/add", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody

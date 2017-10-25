@@ -5,6 +5,7 @@ import io.khasang.bazaar.entity.News;
 import io.khasang.bazaar.entity.NewsTag;
 
 import java.util.List;
+import java.util.Set;
 
 public class NewsDaoImpl extends BasicDaoImpl<News> implements NewsDao {
 
@@ -21,10 +22,12 @@ public class NewsDaoImpl extends BasicDaoImpl<News> implements NewsDao {
 
     @Override
     public List<NewsTag> getNewsTagsList(Long id) {
-        return sessionFactory.getCurrentSession().
-                createQuery("from NewsTag as nt where nt.news_id = :id", NewsTag.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("from NewsTag as nt where nt.id = :id", NewsTag.class)
                 .setParameter("id", id)
                 .getResultList();
 
     }
+
+
 }

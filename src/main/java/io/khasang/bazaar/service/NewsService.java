@@ -37,5 +37,8 @@ public interface NewsService {
 
     List<News> getNewsByTitle(String title);
 
-    // Set<NewsTag> getNewsTagSet(Long id);
+    News updateNews(News news);
+
+    List<NewsTag> getNewsTagList(long l);
+
 }

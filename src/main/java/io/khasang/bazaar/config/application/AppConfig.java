@@ -4,12 +4,6 @@ import io.khasang.bazaar.dao.*;
 import io.khasang.bazaar.dao.impl.*;
 import io.khasang.bazaar.entity.*;
 import io.khasang.bazaar.model.*;
-import io.khasang.bazaar.entity.Goods;
-import io.khasang.bazaar.entity.GoodsCategory;
-import io.khasang.bazaar.entity.Seller;
-import io.khasang.bazaar.entity.Delivery;
-import io.khasang.bazaar.entity.User;
-import io.khasang.bazaar.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +22,7 @@ public class AppConfig {
     private Environment environment;
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcDao = new JdbcDaoImpl();
         jdbcDao.setDataSource(dataSource());
         jdbcDao.setUsersByUsernameQuery(environment.getRequiredProperty("usersByQuery"));
@@ -54,23 +48,23 @@ public class AppConfig {
     }
 
     @Bean
-    public CreateTable createTable(){
+    public CreateTable createTable() {
         return new CreateTable(jdbcTemplate());
     }
 
     @Bean
-    public CatDao catDao(){
+    public CatDao catDao() {
         return new CatDaoImpl(Cat.class);
     }
 
     @Bean
-    public UserDao userDao(){
+    public UserDao userDao() {
         return new UserDaoImpl(User.class);
     }
 
 
     @Bean
-    public CarsDao carsDao(){
+    public CarsDao carsDao() {
         return new CarsDaoImpl(CarsEntity.class);
     }
 
@@ -98,6 +92,7 @@ public class AppConfig {
     public GoodsDao goodsDao() {
         return new GoodsDaoImpl(Goods.class);
     }
+
     @Bean
     public SellerDao sellerDao() {
         return new SellerDaoImpl(Seller.class);
@@ -109,7 +104,7 @@ public class AppConfig {
     }
 
     @Bean
-    public DiscountDao discountDao(){
+    public DiscountDao discountDao() {
         return new DiscountDaoImpl(Discount.class);
     }
 }

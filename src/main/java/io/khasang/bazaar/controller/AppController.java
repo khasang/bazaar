@@ -39,7 +39,7 @@ public class AppController {
     }
 
     @RequestMapping("/admin")
-    public String getAdminInfo(Model model){
+    public String getAdminInfo(Model model) {
         model.addAttribute("secure", "It's very secure page!");
         return "admin";
     }

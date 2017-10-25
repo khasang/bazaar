@@ -4,6 +4,7 @@ import io.khasang.bazaar.entity.News;
 import io.khasang.bazaar.entity.NewsTag;
 import io.khasang.bazaar.service.NewsService;
 import io.khasang.bazaar.dao.NewsDao;
+import io.khasang.bazaar.service.NewsTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +43,15 @@ public class NewsServiceImpl implements NewsService {
         return newsDao.getNewsByTitle(title);
     }
 
-    //    @Override
-//    public Set<NewsTag> getNewsTagSet(Long id) {
-//        return null;
-//    }
+    @Override
+    public News updateNews(News news) {
+        return newsDao.update(news);
+    }
+
+    @Override
+    public List<NewsTag> getNewsTagList(long id) {
+        return newsDao.getNewsTagsList(id);
+    }
+
 
 }

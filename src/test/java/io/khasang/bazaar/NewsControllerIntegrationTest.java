@@ -2,6 +2,7 @@ package io.khasang.bazaar;
 
 import io.khasang.bazaar.entity.News;
 import io.khasang.bazaar.entity.NewsCategory;
+import io.khasang.bazaar.entity.NewsTag;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -89,7 +90,19 @@ public class NewsControllerIntegrationTest {
         NewsCategory category = new NewsCategory();
         category.setName("Sale");
         news.setCategory(category);
+
+        NewsTag newsTag1 = new NewsTag();
+        newsTag1.setName("Sale");
+
+        NewsTag newsTag2 = new NewsTag();
+        newsTag2.setName("Black Friday");
+
+        news.addTag(newsTag1);
+        news.addTag(newsTag2);
+
         return news;
     }
+
+
 
 }

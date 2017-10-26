@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Simple JavaBean domain object that represents a User (dummy with two fields: login and password)
+ * Simple JavaBean domain object that represents a User (dummy object with two fields: login and password)
  *
  * @author Denis Tyurin
  * @version 1.0

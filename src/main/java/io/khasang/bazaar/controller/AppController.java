@@ -39,7 +39,7 @@ public class AppController {
     }
 
     @RequestMapping("/admin")
-    public String getAdminInfo(Model model){
+    public String getAdminInfo(Model model) {
         model.addAttribute("secure", "It's very secure page!");
         return "admin";
     }
@@ -51,5 +51,4 @@ public class AppController {
         modelAndView.addObject("crypt", new BCryptPasswordEncoder().encode(password));
         return modelAndView;
     }
-
 }

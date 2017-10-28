@@ -1,7 +1,10 @@
 package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 @Table(name = "news_tags")
 public class NewsTag {
     @Id
@@ -10,6 +13,9 @@ public class NewsTag {
 
     @Column(nullable = false, name = "name")
     private String name;
+
+    @ManyToMany()
+    private List<News> newsList = new ArrayList<>();
 
     public Long getId() {
         return id;

@@ -2,10 +2,11 @@ package io.khasang.bazaar.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "news")
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +18,11 @@ public class News {
     @Column(nullable = false)
     private String body;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private NewsCategory newsCategory;
 
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    private List<NewsTag> newsTagList = new ArrayList<>();
-
-    public News() {
-    }
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<NewsTag> newsTagList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -46,5 +46,20 @@ public class News {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public void setCategory(NewsCategory category) {
+        this.newsCategory = category;
+    }
+
+    public void addTag(NewsTag newsTag) {
+        newsTagList.add(newsTag);
+    }
+
+    public List<NewsTag> getNewsTagList() {
+        return newsTagList;
+    }
+
+    public News() {
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.SortedMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -22,7 +24,6 @@ public class CarsControllerIntegrationTest {
     @Test
     public void addCars() {
         CarsEntity carsEntity = createCars();
-
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<CarsEmployeeDto> responseEntity = restTemplate.exchange(
                 ROOT + GET_BY_ID + "/{id}",
@@ -36,6 +37,8 @@ public class CarsControllerIntegrationTest {
 
     }
 
+
+    // something to do
     @Test
     public void getAllCats() {
         RestTemplate restTemplate = new RestTemplate();

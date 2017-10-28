@@ -30,9 +30,10 @@ INSERT INTO users VALUES (3, 'admin', 'qwerty123456');
 
 INSERT INTO roles VALUES (1, -1, 1, 10, 'USER');
 INSERT INTO roles VALUES (2, -1, 1, 0, 'ADMIN');
-INSERT INTO roles VALUES (3, -1, 1, 11, 'SELLER');
+INSERT INTO roles VALUES (3, -1, 1, 20, 'SELLER');
 INSERT INTO roles VALUES (4, -1, 1, 1, 'SUPPORT');
 INSERT INTO roles VALUES (5, -1, 1, 2, 'ARBITRATOR');
+INSERT INTO roles VALUES (6, -1, 1, 11, 'ANONYMOUS');
 
 -- DROP TABLE user_roles;
 --

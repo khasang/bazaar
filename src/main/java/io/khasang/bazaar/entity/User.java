@@ -1,9 +1,6 @@
 package io.khasang.bazaar.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Simple JavaBean domain object that represents a User (dummy object with two fields: login and password)
@@ -16,23 +13,23 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "login", unique = true)
+    @Column(name = "login", unique = true, length = 30)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 20)
     private String password;
 
     @Transient
     transient private String confirmPassword;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "role", nullable = false)
+//    @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Role role;
 
     public User(String login, String password) {
         this.login = login;
@@ -74,12 +71,12 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
 }

@@ -1,10 +1,7 @@
 package io.khasang.bazaar;
 
-import com.sun.org.apache.regexp.internal.RE;
 import io.khasang.bazaar.entity.Role;
 import io.khasang.bazaar.entity.User;
-import io.khasang.bazaar.service.RoleService;
-import io.khasang.bazaar.service.impl.RoleServiceImpl;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -19,11 +16,14 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class RoleControllerIntegrationTest {
-    public RoleService roleService = new RoleServiceImpl();
-
     private final String ROOT = "http://localhost:8080/roles";
+    private final String HOST = "localhost:8080/roles";
+    private final String SCHEMA = "http";
     private final String ADD = "/add";
     private final String GET_BY_ID = "/get/id";
+    private final String ID = "/{id}";
+    private final String ID_PARAM = "?id=";
+    private final String ID_FOR_QUERY = "id={id}";
     private final String GET_ALL = "/get/all";
     private final String UPDATE = "/update";
     private final String DELETE = "/delete";
@@ -33,7 +33,7 @@ public class RoleControllerIntegrationTest {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        Role role = createRoleTestObj("TESTROLE", 333);
+        Role role = createRoleTestObj("TESTROLE");
         HttpEntity<Role> httpEntity = new HttpEntity<>(role, httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -44,15 +44,15 @@ public class RoleControllerIntegrationTest {
                 Role.class);
         assertEquals(HttpStatus.OK, roleResponseEntity.getStatusCode());
         assertTrue(roleResponseEntity.hasBody());
-        assertNotNull(roleResponseEntity.getBody());
+        assertEquals(role.getRoleName(), roleResponseEntity.getBody().getRoleName());
     }
 
     @Test
     public void getRoleById() {
-        Role role = createRoleTestObjViaRest("TESTROLE", 111);
+        Role role = createRoleTestObjViaRest("TESTROLE");
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Role> roleResponseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
+                ROOT + GET_BY_ID + ID,
                 HttpMethod.GET,
                 null,
                 Role.class,
@@ -60,8 +60,7 @@ public class RoleControllerIntegrationTest {
         );
         assertEquals(HttpStatus.OK, roleResponseEntity.getStatusCode());
         assertTrue(roleResponseEntity.hasBody());
-        //TODO нужна ли эта проверка после предыдущей?
-        assertNotNull(roleResponseEntity.getBody());
+        assertEquals(role.getId(), roleResponseEntity.getBody().getId());
     }
 
     @Test
@@ -80,10 +79,10 @@ public class RoleControllerIntegrationTest {
 
     @Test
     public void updateRole() {
-        Role role = createRoleTestObjViaRest("TESTROLE", 222);
+        Role role = createRoleTestObjViaRest("TESTROLE");
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Role> roleResponseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
+                ROOT + GET_BY_ID + ID,
                 HttpMethod.GET,
                 null,
                 Role.class,
@@ -107,7 +106,7 @@ public class RoleControllerIntegrationTest {
         assertEquals(HttpStatus.OK, roleResponseEntity.getStatusCode());
 
         roleResponseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
+                ROOT + GET_BY_ID + ID,
                 HttpMethod.GET,
                 null,
                 Role.class,
@@ -120,15 +119,15 @@ public class RoleControllerIntegrationTest {
 
     @Test
     public void deleteRole() {
-        Role role = createRoleTestObjViaRest("ROLEFORDEL", 444);
+        Role role = createRoleTestObjViaRest("ROLEFORDEL");
         RestTemplate restTemplate = new RestTemplate();
         UriComponents uriComponents = UriComponentsBuilder.newInstance()
-                .scheme("http").host("localhost:8080/roles").path(DELETE)
-                .query("id={id}").buildAndExpand(role.getId());
+                .scheme(SCHEMA).host(HOST).path(DELETE)
+                .query(ID_FOR_QUERY).buildAndExpand(role.getId());
         restTemplate.delete(uriComponents.toUriString());
 
         ResponseEntity<Role> roleResponseEntity = restTemplate.exchange(
-                ROOT + GET_BY_ID + "/{id}",
+                ROOT + GET_BY_ID + ID,
                 HttpMethod.GET,
                 null,
                 Role.class,
@@ -138,11 +137,36 @@ public class RoleControllerIntegrationTest {
         assertNull(roleResponseEntity.getBody());
     }
 
-    private Role createRoleTestObjViaRest(String roleName, Integer roleId) {
+    @Test
+    public void deleteRoleViaRestTemplate() {
+        Role role = createRoleTestObjViaRest("ROLEFORDEL");
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Role> roleResponseEntity = restTemplate.exchange(
+                ROOT + DELETE + ID_PARAM + role.getId(),
+                HttpMethod.DELETE,
+                null,
+                Role.class,
+                role.getId()
+        );
+        assertEquals(HttpStatus.OK, roleResponseEntity.getStatusCode());
+
+        roleResponseEntity = restTemplate.exchange(
+                ROOT + GET_BY_ID + ID,
+                HttpMethod.GET,
+                null,
+                Role.class,
+                role.getId()
+        );
+        assertEquals(HttpStatus.OK, roleResponseEntity.getStatusCode());
+        assertFalse(roleResponseEntity.hasBody());
+    }
+
+    private Role createRoleTestObjViaRest(String roleName) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        Role role = createRoleTestObj(roleName, roleId);
+        Role role = createRoleTestObj(roleName);
         HttpEntity<Role> httpEntity = new HttpEntity<>(role, httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -154,10 +178,9 @@ public class RoleControllerIntegrationTest {
         return role;
     }
 
-    private Role createRoleTestObj(String roleName, Integer roleId) {
+    private Role createRoleTestObj(String roleName) {
         Role role = new Role();
         role.setRoleName(roleName);
-        role.setRoleId(roleId);
         role.setConnectionLimit(-1);
         role.setIsActive(1);
 

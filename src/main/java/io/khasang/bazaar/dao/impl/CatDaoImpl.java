@@ -5,6 +5,12 @@ import io.khasang.bazaar.entity.Cat;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link CatDao} interface
+ *
+ * @author Sergey Khuznecov (Khasang.io)
+ * @version 1.0
+ */
 public class CatDaoImpl extends BasicDaoImpl<Cat> implements CatDao {
     public CatDaoImpl(Class<Cat> entityClass) {
         super(entityClass);

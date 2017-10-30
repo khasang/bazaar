@@ -5,8 +5,6 @@ import io.khasang.bazaar.entity.Role;
 import java.util.List;
 
 public interface RoleDao extends BasicDao<Role> {
-//public interface RoleDao extends JpaRepository<Role, Long> {
-
     /**
      * Returns a role with the specified name
      *

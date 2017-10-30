@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import java.util.List;
 
 public interface BasicDao<T> {
-
     /**
      * Get current Hibernate session
      *

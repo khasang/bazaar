@@ -14,22 +14,19 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, name = "role_name", unique = true)
+    @Column(nullable = false, name = "role_name", unique = true, length = 30)
     private String roleName;
-
-    @Column(nullable = false, name = "role_id", unique = true)
-    private Integer roleId;
 
     @Column(nullable = false, name = "isactive", columnDefinition = "INTEGER DEFAULT 1")
     private Integer isActive = 1;
 
-    @Column(nullable = false, name = "connection_limit")
+    @Column(nullable = false, name = "connection_limit", columnDefinition = "INTEGER DEFAULT -1")
     private Integer connectionLimit = -1;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<User> users;
 
     public Role() {
@@ -49,14 +46,6 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleID) {
-        this.roleId = roleID;
     }
 
     public Integer getIsActive() {

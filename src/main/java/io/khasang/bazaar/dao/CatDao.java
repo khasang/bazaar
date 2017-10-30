@@ -4,7 +4,6 @@ import io.khasang.bazaar.entity.Cat;
 import java.util.List;
 
 public interface CatDao extends BasicDao<Cat> {
-
     /**
      * Receive cats from database with specified name
      *

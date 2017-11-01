@@ -107,4 +107,9 @@ public class AppConfig {
     public DiscountDao discountDao() {
         return new DiscountDaoImpl(Discount.class);
     }
+
+    @Bean
+    public SupportDao supportDao() {
+        return new SupportDaoImpl(Support.class);
+    }
 }

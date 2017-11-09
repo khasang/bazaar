@@ -3,6 +3,7 @@ package io.khasang.bazaar.config.application;
 import io.khasang.bazaar.dao.*;
 import io.khasang.bazaar.dao.impl.*;
 import io.khasang.bazaar.entity.*;
+import io.khasang.bazaar.entity.Message;
 import io.khasang.bazaar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -106,5 +107,10 @@ public class AppConfig {
     @Bean
     public DiscountDao discountDao() {
         return new DiscountDaoImpl(Discount.class);
+    }
+
+    @Bean
+    public MessageDao messageDao() {
+        return new MessageDaoImpl(Message.class);
     }
 }

@@ -107,12 +107,8 @@ public class SellerControllerIntegrationTest {
                 seller.getLogin()
         );
 
-        //Seller receivedSeller = responseEntity.getBody();
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertNotNull(result.getBody());
-        /*assertEquals(seller.getLogin(), receivedSeller.getLogin());
-        assertEquals(seller.getBalance(), receivedSeller.getBalance());
-        assertEquals(seller.getRoleId(), receivedSeller.getRoleId());*/
     }
 
     @Test

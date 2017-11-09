@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by Zulfia Garifullina on 13.10.2017.
+ * Implementation of the service interface for Seller entity.
+ *
+ * @author Zulfia Garifullina
+ * @date 13.10.2017.
  */
 @Service("sellerService")
 public class SellerServiceImpl implements SellerService {

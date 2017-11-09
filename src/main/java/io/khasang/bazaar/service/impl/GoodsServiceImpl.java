@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Implementation of the service interface for Goods entity.
+ *
  * @author Zulfia Garifullina
  * @date 04.10.2017.
  */
@@ -54,9 +55,13 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Goods reserveGoods(Long id, Integer quantity) {
         Goods goods = goodsDao.getById(id);
-        goods.setQuantityInStock(goods.getQuantityInStock() - quantity);
-        goods.setQuantityReserved(goods.getQuantityReserved() + quantity);
-        return goodsDao.update(goods);
+        if (goods.getQuantityInStock() < quantity) {
+            return goods;
+        } else {
+            goods.setQuantityInStock(goods.getQuantityInStock() - quantity);
+            goods.setQuantityReserved(goods.getQuantityReserved() + quantity);
+            return goodsDao.update(goods);
+        }
     }
 
     @Override

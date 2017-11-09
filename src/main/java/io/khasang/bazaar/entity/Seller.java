@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @date 11.10.2017.
  */
 @Entity
-@Table(name = "seller")
+@Table(name = "sellers")
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

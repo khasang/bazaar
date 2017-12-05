@@ -112,4 +112,9 @@ public class AppConfig {
     public SupportDao supportDao() {
         return new SupportDaoImpl(Support.class);
     }
+
+    @Bean
+    public BasketDao basketDAO(){
+        return new BasketDaoImpl(Basket.class);
+    }
 }

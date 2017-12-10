@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.soap.SOAPException;
-import java.io.IOException;
-
 @Controller
 //@RequestMapping("/")
 public class AppController {
@@ -29,6 +26,12 @@ public class AppController {
     @RequestMapping("/")
     public String javaPageHello() {
         return "menu";
+    }
+
+    // http://localhost:8080/goods001
+    @RequestMapping("/goods001")
+    public String javaPageGoods() {
+        return "goods001";
     }
 
     @RequestMapping("/create")

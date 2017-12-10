@@ -122,18 +122,18 @@
             <version>${junit.version}</version>
         </dependency>
         <!--Vue for JavaScript-->
-<!--        <dependency>
+        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>vue</artifactId>
             <version>${vue.version}</version>
-        </dependency>-->
+        </dependency>
         <!--Axios for Vue-->
         <!-- https://mvnrepository.com/artifact/org.webjars.npm/axios -->
-<!--        <dependency>
+        <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>axios</artifactId>
             <version>0.17.0</version>
-        </dependency>-->
+        </dependency>
 
     </dependencies>
 

@@ -1,5 +1,3 @@
-// import Vue from 'vue/dist/vue'
-
     var goods001 = new Vue({
         el: '#goods001',
         data: {

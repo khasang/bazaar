@@ -34,6 +34,11 @@ public class AppController {
         return "goods001";
     }
 
+    @RequestMapping("/hello-world")
+    public String javaPageHelloWorld() {
+        return "hello-world";
+    }
+
     @RequestMapping("/create")
     public String createTable(Model model) {
         model.addAttribute("status", createTable.createStatus());

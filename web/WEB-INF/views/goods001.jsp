@@ -11,6 +11,9 @@
 
 <body>
     <div id="goods001">
+        <button v-text="Basket">
+            <link href="http://localhost:8080/basket"/>
+        </button>
         <h1>{{ goods.name }}</h1>
         <img src="http://t2.gstatic.com/images?q=tbn:ANd9GcSBHuR9vXsFerPZKoUGyL2ryuUhjiUfv_0Vr7ouA3Z4v3f5gSgt"/>
 
@@ -20,6 +23,8 @@
             </div>
             <div class="panel-body" id="description">{{ goods.description }}</div>
         </div>
+
+        <button v-text="Add to basket" @click.prevent="addToBasket()"></button>
     </div>
 
     <script
@@ -59,6 +64,9 @@
                         .catch(e => {
                             this.errors.push(e);
                         });
+                },
+                addToBasket: function () {
+
                 }
             }
         });

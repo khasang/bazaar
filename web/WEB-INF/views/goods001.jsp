@@ -10,67 +10,78 @@
 </head>
 
 <body>
-    <div id="goods001">
-        <button v-text="Basket">
-            <link href="http://localhost:8080/basket"/>
-        </button>
-        <h1>{{ goods.name }}</h1>
-        <img src="http://t2.gstatic.com/images?q=tbn:ANd9GcSBHuR9vXsFerPZKoUGyL2ryuUhjiUfv_0Vr7ouA3Z4v3f5gSgt"/>
+<div id="goods001">
+    <a href="http://localhost:8080/basket" class="Button">Basket</a>
+    <h1>{{ goods.name }}</h1>
+    <img src="http://t2.gstatic.com/images?q=tbn:ANd9GcSBHuR9vXsFerPZKoUGyL2ryuUhjiUfv_0Vr7ouA3Z4v3f5gSgt"/>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong>Description</strong>
-            </div>
-            <div class="panel-body" id="description">{{ goods.description }}</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>Description</strong>
         </div>
-
-        <button v-text="Add to basket" @click.prevent="addToBasket()"></button>
+        <div class="panel-body" id="description">{{ goods.description }}</div>
     </div>
 
-    <script
-            src="//cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.js">
-    </script>
+    <button @click.prevent="addToBasket()">Add to basket</button>
+</div>
 
-    <script
-            src="//cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js">
-    </script>
+<script
+        src="//cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.js">
+</script>
 
-    <script>
-        var vm = new Vue({
-            el: "#goods001",
-            data() {
-                return {
-                    goods: {
-                        id: 0,
-                        name: '',
-                        description: '',
-                        price: 0,
-                        category: {},
-                        sellerLogin: '',
-                        quantityInStock: 0,
-                        quantityReserved: 0
-                    }
-                }
-            },
-            mounted() {
-                this.get();
-            },
-            methods: {
-                get: function () {
-                    axios.get('http://localhost:8080/goods/get/id/1')
-                        .then(response => {
-                            this.goods = response.data;
-                        })
-                        .catch(e => {
-                            this.errors.push(e);
-                        });
-                },
-                addToBasket: function () {
+<script
+        src="//cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js">
+</script>
 
+<script>
+    var vm = new Vue({
+        el: "#goods001",
+        data() {
+            return {
+                goods: {
+                    id: 0,
+                    name: '',
+                    description: '',
+                    price: 0,
+                    category: {},
+                    sellerLogin: '',
+                    quantityInStock: 0,
+                    quantityReserved: 0
                 }
             }
-        });
-    </script>
+        },
+        mounted() {
+            this.get();
+        },
+        methods: {
+            get: function () {
+                axios.get('http://localhost:8080/goods/get/id/1')
+                    .then(response => {
+                        this.goods = response.data;
+                    })
+                    .catch(e => {
+                        this.errors.push(e);
+                    });
+            },
+            addToBasket: function () {
+                axios.put('http://localhost:8080/basket/add', {
+                    id: 1,
+                    goodsid: 1,
+                    orderid: 1,
+                    userid: 1,
+                    ordernotissued: 1,
+                    orderissued: 0
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }
+    });
+</script>
 
 </body>
 

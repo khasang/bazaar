@@ -34,6 +34,13 @@ public class AppController {
         return "goods001";
     }
 
+    // http://localhost:8080/basket
+    @RequestMapping("/basket")
+    public String javaPageBasket() {
+        return "basket";
+    }
+
+    // http://localhost:8080/hello-world
     @RequestMapping("/hello-world")
     public String javaPageHelloWorld() {
         return "hello-world";
